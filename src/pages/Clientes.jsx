@@ -95,7 +95,7 @@ const Clientes = () => {
                     <label htmlFor="password">Contraseña :</label>
                     <InputForm name="password" onChange={onChange} type="password"  placeholder=''  value={password}/>
                   </CampoForm>
-                  <BotonAdd type='submit'>Agregar Productor</BotonAdd>
+                  <BotonAdd type='submit'>Agregar Cliente</BotonAdd>
               </Form>
             </ContainerForm>
         }

@@ -3,7 +3,7 @@ import { faCircleXmark, faPenToSquare } from '@fortawesome/free-regular-svg-icon
 import { faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
-import { obtenerTransportistas } from '../helpers/getAdmin';
+import { agregarTransportistas, obtenerTransportistas } from '../helpers/getAdmin';
 import { CardTransportistas } from '../components/CardTransportistas';
 import { useNavigate } from 'react-router-dom';
 
@@ -52,7 +52,7 @@ const Transportistas = () => {
           return
         }
         try {
-          const respuesta = await obtenerTransportistas(formValues);
+          const respuesta = await agregarTransportistas(formValues);
           setAlerta({error: false, msg:`${respuesta.msg}`})
           setFormValues({correo: '', password: '', nombre: ''})
           setTimeout(() => {
@@ -119,7 +119,7 @@ const Transportistas = () => {
         <AgregarContainer>
           <BotonAdd onClick={activateModal}> 
             <FontAwesomeIcon icon={faUserPlus}/>
-            Crear Productor
+            Crear Transportista
             </BotonAdd>
         </AgregarContainer>
 
