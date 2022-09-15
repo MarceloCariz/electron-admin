@@ -1,0 +1,33 @@
+
+--------------------------------editar productores
+--------------------------------eliminar productores
+
+--------------------------------eliminar transportistas
+--------------------------------editar transportistas
+
+--------------------------------obtener clientes
+--------------------------------eliminar clientes
+--------------------------------editar clientes
+
+------------Manejo de errores en el login
+------------> alertas de campos vacios
+
+
+
+-----------------boton cerrar sesion
+plazo: Lunes hasta las 18:00
+
+
+
+
+--------------------------------
+errores/fallos:
+--------------------------------
+
+// - TOKEN SESSION para cerar sesion : fallo INTERMITENTE 
+
+TypeError: error.response is undefined
+
+error de campos registrar cliente
+
+
