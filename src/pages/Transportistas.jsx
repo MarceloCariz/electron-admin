@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { faPenToSquare,  } from '@fortawesome/free-regular-svg-icons';
-import {  faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import {  faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import { faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { agregarTransportistas, borrarTransportistas, editarTransportistas, obtenerTransportistas } from '../helpers/getAdmin';
 import { useNavigate } from 'react-router-dom';
-import { DataGrid } from '@mui/x-data-grid';
-import ModalEditar from '../components/ui/ModalEditar';
 import { Button } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 import ModalAgregar from '../components/ui/ModalAgregar';
+import ModalEditar from '../components/ui/ModalEditar';
 
 
 const Transportistas = () => {
