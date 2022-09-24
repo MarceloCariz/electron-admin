@@ -13,16 +13,16 @@ import ModalEditar from '../components/ui/ModalEditar';
 
 const Transportistas = () => {
   //DATOS
-  const [alerta, setAlerta] = useState({msg:'', error:false})
+  const [alerta, setAlerta] = useState("")
   const [formValues, setFormValues] = useState({nombre: '', correo: '', id: 0, password: ''});
-  const {nombre, correo, password } = formValues;
   const [transportistas, setTransportistas] = useState([])
   ///MODALES
   const [openAgregar, setOpenAgregar] = useState(false);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-    
+  const {nombre, correo, password } = formValues;
+
   
     
 
@@ -69,6 +69,13 @@ const onChange = ({ target }) => {
 /// AGREGAR TRANSPORTISTA
 const  handleAgregar = async(e) =>{
   e.preventDefault();
+  if ([correo, nombre, password].includes("")) {
+    setAlerta('Todos los campos son obligatorios')
+    setTimeout(() => {
+      setAlerta('');
+    }, 3000);
+    return;
+  }
   const respuesta = await agregarTransportistas(formValues);
   window.location.reload();
 
@@ -114,7 +121,7 @@ const columns =[
           <FontAwesomeIcon icon={faUserPlus}/>
           Agregar Transportista
         </Boton>
-        <ModalAgregar  open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
+        <ModalAgregar error={alerta}  open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
         {/* -------------------FORM------------------------ */}
         <DataGrid
             style={{  width: '70vw' }}

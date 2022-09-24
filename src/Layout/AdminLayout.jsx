@@ -2,7 +2,12 @@ import React from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 import { useNavigate } from "react-router-dom"
+import { Icon } from '@mui/material';
 
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import AllInboxIcon from '@mui/icons-material/AllInbox';
+import BarChartIcon from '@mui/icons-material/BarChart';
 const AdminLayout = () => {
     const history = useNavigate();
     const logOut = () =>{
@@ -10,14 +15,18 @@ const AdminLayout = () => {
         history('/');
     }
   return (
+
     <Div>
         <Navbar>
             <Link to={'/inicio'} style={{textDecoration: 'none'}}>
                 <Titulo>Administrador MaipoGrande</Titulo>   
             </Link>
-           <Opciones>
+            <Opciones>
                 <div>
-                    <Tituloopcion>Usuarios</Tituloopcion>
+                    <Tituloopcion>
+                        <Icon component={PeopleAltIcon} />
+                        Usuarios
+                    </Tituloopcion>
                     <ContainerOpciones>
                         <SubtituloOpcion to={'productores'}>Productores</SubtituloOpcion>
                         <SubtituloOpcion to={'transportistas'}>Transportista</SubtituloOpcion>
@@ -25,21 +34,28 @@ const AdminLayout = () => {
                     </ContainerOpciones>
                 </div>
                 <div>
-                    <Tituloopcion>Pedidos</Tituloopcion>
+                    
+                    <Tituloopcion>
+                        <Icon component={AllInboxIcon} />
+                        Pedidos</Tituloopcion>
                     <ContainerOpciones>
                         <SubtituloOpcion to={'pedidos'}>Subastas</SubtituloOpcion>
                         <SubtituloOpcion to={''}>Pedidos</SubtituloOpcion>
                     </ContainerOpciones>
                 </div>
                 <div>
-                    <Tituloopcion>Contratos</Tituloopcion>
+                    <Tituloopcion>
+                        <Icon component={AssignmentIcon} />
+                        Contratos</Tituloopcion>
                     <ContainerOpciones>
                         <SubtituloOpcion to={''}>Productores</SubtituloOpcion>
                         <SubtituloOpcion to={''}>Transportistas</SubtituloOpcion>
                     </ContainerOpciones>
                 </div>
                 <div>
-                    <Tituloopcion>Graficas</Tituloopcion>
+                    <Tituloopcion>
+                    <Icon component={BarChartIcon} />
+                        Graficas</Tituloopcion>
                     <ContainerOpciones>
                         <SubtituloOpcion to={''}>Ventas</SubtituloOpcion>
                         <SubtituloOpcion to={''}>Informes</SubtituloOpcion>
@@ -51,7 +67,7 @@ const AdminLayout = () => {
                         <SubtituloOpcion2 onClick={()=>{logOut()}} >Cerrar Sesion</SubtituloOpcion2>
                     </ContainerOpciones>
                 </div>
-           </Opciones>
+            </Opciones>
         </Navbar>
         <Container>
             <Outlet/>
@@ -61,7 +77,7 @@ const AdminLayout = () => {
 }
 
 const SubtituloOpcion = styled(Link)`
-  cursor: pointer;  
+  cursor: pointer;
   text-decoration: none;
   color: white;
   -webkit-app-region: no-drag;
@@ -90,11 +106,15 @@ const ContainerOpciones = styled.div`
 const Tituloopcion = styled.h3`
     color: white;
     font-weight: 500;
-    background-color: #424242;
+    /* background-color: #424242; */
+    background-color: #42424261;
     width: 80%;
     padding-left: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     /* text-decoration: underline; */
 `
 

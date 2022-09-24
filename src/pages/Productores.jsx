@@ -12,7 +12,7 @@ import ModalEditar from '../components/ui/ModalEditar';
 
 const Productores = () => {
     const [productores, setProductores] = useState([]);
-    const [alerta, setAlerta] = useState({msg:'', error:false})
+    const [alerta, setAlerta] = useState("")
     const [formValues, setFormValues] = useState({nombre: '', correo: '', id: 0, password: ''});
     const {nombre, correo, password } = formValues;
     ///MODALES
@@ -44,7 +44,7 @@ const Productores = () => {
   };
 useEffect(() => {
 
-    if (localStorage.getItem("token") == "" ) {
+    if (localStorage.getItem("token") === "" ) {
           navigate('/')
         }
         const cargarProductores = async()=>{
@@ -67,9 +67,12 @@ const onChange = ({ target }) => {
 const  handleAgregar = async(e) =>{
   e.preventDefault();
   if ([correo, nombre, password].includes("")) {
-    console.log('to')
+    setAlerta('Todos los campos son obligatorios')
+    setTimeout(() => {
+      setAlerta('');
+    }, 3000);
     return;
-}
+  }
   const respuesta = await agregarProductor(formValues);
 
   window.location.reload();
@@ -121,7 +124,7 @@ const columns =[
           <FontAwesomeIcon icon={faUserPlus}/>
           Agregar Productor
         </Boton>
-        <ModalAgregar  open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
+        <ModalAgregar error={alerta}   open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
         <DataGrid
             style={{  width: '70vw' }}
             rows={productores}
