@@ -17,22 +17,18 @@ const Productores = () => {
     const {nombre, correo, password } = formValues;
     ///MODALES
     const [openAgregar, setOpenAgregar] = useState(false);
-    const [open, setOpen] = useState(false);
+    const [openEditar, setOpenEditar] = useState(false);
     const navigate = useNavigate();
-  
       
-    
-      
-  
   // FUNCIONES CERRAR MODAL EDITAR
-  const handleOpen = (e) => {
-      setOpen(true);
-      setFormValues({ nombre: e.NOMBRE, correo: e.CORREO, id: e.ID || '' });
-  };
-  const handleClose = () => {
-    setFormValues({ nombre: '', correo: '', id:  '' ,password: ''});
-    setOpen(false)
-  };
+const handleOpenEditar = (e) => {
+  setOpenEditar(true);
+    setFormValues({ nombre: e.NOMBRE, correo: e.CORREO, id: e.ID || '' });
+};
+const handleCloseEditar = () => {
+  setFormValues({ nombre: '', correo: '', id:  ''  ,password: ''});
+  setOpenEditar(false)
+};
   
   // FUNCIONES CERRAR MODAL AGREGAR
   const handleOpenAgregar =(e) => {
@@ -82,14 +78,11 @@ const  handleAgregar = async(e) =>{
 const handleEditarProductor = async(e) =>{
     e.preventDefault();
     if ([correo, nombre].includes("")) {
-        setAlerta({
-        error: true,
-        msg: "Todos los campos son obligatorios",
-        });
-        setTimeout(() => {
-        setAlerta({ error: false, msg: "" });
-        }, 2000);
-        return;
+      setAlerta('Todos los campos son obligatorios')
+      setTimeout(() => {
+        setAlerta('');
+      }, 2000);
+      return;
     }
     const respuesta = await editarProductores(formValues);
     window.location.reload();
@@ -105,11 +98,11 @@ const columns =[
         { field: 'CORREO', headerName: 'Correo', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.CORREO}</>},
         { field: 'acciones', headerName: 'Acciones', flex:1 , minWidth: 150 , renderCell: (params) => 
         <div style={{display:'flex', gap:'10px' , alignItems: 'center'}}>
-          <Boton variant='contained'  onClick={(e) => handleOpen(params.row,e)}>
+          <Boton variant='contained'  onClick={(e) => handleOpenEditar(params.row,e)}>
             <FontAwesomeIcon   icon={faPenToSquare} />
             Editar
           </Boton>
-          <Boton variant='contained' color='error'   onClick={(e)=> RemoveProductor(params.row.ID,e)}>
+          <Boton variant='contained' color='error' onClick={(e)=> RemoveProductor(params.row.ID,e)}>
               <FontAwesomeIcon   icon={faTrash}/>
             Eliminar
           </Boton>
@@ -124,7 +117,7 @@ const columns =[
           <FontAwesomeIcon icon={faUserPlus}/>
           Agregar Productor
         </Boton>
-        <ModalAgregar error={alerta}   open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
+        <ModalAgregar error={alerta} open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
         <DataGrid
             style={{  width: '70vw' }}
             rows={productores}
@@ -134,7 +127,7 @@ const columns =[
             autoHeight={true}
             autoPageSize={true}   
         />
-      <ModalEditar open={open} handleClose={handleClose} handleEditar={handleEditarProductor} onChange={onChange} nombre={nombre} correo={correo} />
+      <ModalEditar error={alerta} open={openEditar} handleClose={handleCloseEditar} handleEditar={handleEditarProductor} onChange={onChange} nombre={nombre} correo={correo} />
     </div>
 
     </>

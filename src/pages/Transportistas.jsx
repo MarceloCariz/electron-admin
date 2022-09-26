@@ -18,22 +18,37 @@ const Transportistas = () => {
   const [transportistas, setTransportistas] = useState([])
   ///MODALES
   const [openAgregar, setOpenAgregar] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openEditar, setOpenEditar] = useState(false);
+  //const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const {nombre, correo, password } = formValues;
 
+  useEffect(() => {
+    if (localStorage.getItem("token") === "" || localStorage.getItem("token") === "undefined" ) {
+      navigate("/");
+    }
+    const cargartransportistas = async () => {
+      const respuesta = await obtenerTransportistas();
+      console.log(respuesta);
+      console.log(respuesta);
+      setTransportistas(respuesta);
+    };
+
+    cargartransportistas();
+    console.log(transportistas);
+  }, []);
   
     
 
 // FUNCIONES CERRAR MODAL EDITAR
-const handleOpen = (e) => {
-    setOpen(true);
+const handleOpenEditar = (e) => {
+  setOpenEditar(true);
     setFormValues({ nombre: e.NOMBRE, correo: e.CORREO, id: e.ID || '' });
 };
-const handleClose = () => {
+const handleCloseEditar = () => {
   setFormValues({ nombre: '', correo: '', id:  ''  ,password: ''});
-  setOpen(false)
+  setOpenEditar(false)
 };
 
 // FUNCIONES CERRAR MODAL AGREGAR
@@ -45,19 +60,7 @@ const handleCloseAgregar = () => {
   setOpenAgregar(false)
 };
 
-useEffect(() => {
-      if (localStorage.getItem("token") === "") {
-        navigate("/");
-      }
-      const cargartransportistas = async () => {
-        const respuesta = await obtenerTransportistas();
-        console.log(respuesta);
-        setTransportistas(respuesta);
-      };
-
-      cargartransportistas();
-      console.log(transportistas);
-}, []);
+//====================================
 
 const onChange = ({ target }) => {
     setFormValues({
@@ -84,9 +87,11 @@ const  handleAgregar = async(e) =>{
 const handleEditarTransport = async(e) =>{
     e.preventDefault();
     if ([correo, nombre].includes("")) {
-      console.log('to')
-
-        return;
+      setAlerta('Todos los campos son obligatorios')
+      setTimeout(() => {
+        setAlerta('');
+      }, 2000);
+      return;
     }
     const respuesta = await editarTransportistas(formValues);
     window.location.reload();
@@ -102,7 +107,7 @@ const columns =[
         { field: 'CORREO', headerName: 'Correo', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.CORREO}</>},
         { field: 'acciones', headerName: 'Acciones', flex:1 , minWidth: 150 , renderCell: (params) => 
         <div style={{display:'flex', gap:'10px' , alignItems: 'center'}}>
-          <Boton variant='contained'  onClick={(e) => handleOpen(params.row,e)}>
+          <Boton variant='contained'  onClick={(e) => handleOpenEditar(params.row,e)}>
             <FontAwesomeIcon   icon={faPenToSquare} />
             Editar
           </Boton>
@@ -135,7 +140,7 @@ const columns =[
             
         />
         
-        <ModalEditar open={open} handleClose={handleClose} handleEditar={handleEditarTransport} onChange={onChange} nombre={nombre} correo={correo} />
+        <ModalEditar error={alerta} open={openEditar} handleClose={handleCloseEditar} handleEditar={handleEditarTransport} onChange={onChange} nombre={nombre} correo={correo} />
 
     </div>
   )

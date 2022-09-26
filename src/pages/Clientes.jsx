@@ -20,7 +20,7 @@ const Clientes = () => {
 
   //MODALES
   const [openAgregar, setOpenAgregar] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openEditar, setOpenEditar] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,13 +37,13 @@ const Clientes = () => {
     },[] )
   
   // FUNCIONES CERRAR MODAL EDITAR
-  const handleOpen = (e) => {
-      setOpen(true);
+  const handleOpenEditar = (e) => {
+    setOpenEditar(true);
       setFormValues({ nombre: e.NOMBRE, correo: e.CORREO, id: e.ID || '' });
   };
-  const handleClose = () => {
-    setFormValues({ nombre: '', correo: '', id:  '' ,password: ''});
-    setOpen(false)
+  const handleCloseEditar = () => {
+    setFormValues({ nombre: '', correo: '', id:  ''  ,password: ''});
+    setOpenEditar(false)
   };
   // FUNCIONES CERRAR MODAL AGREGAR
   const handleOpenAgregar =(e) => {
@@ -79,13 +79,10 @@ const Clientes = () => {
   const handleEditarCliente = async(e) =>{
     e.preventDefault();
     if ([correo, nombre].includes("")) {
-        setAlerta({
-        error: true,
-        msg: "Todos los campos son obligatorios",
-        });
-        setTimeout(() => {
-        setAlerta({ error: false, msg: "" });
-        }, 2000);
+      setAlerta('Todos los campos son obligatorios')
+      setTimeout(() => {
+        setAlerta('');
+      }, 2000);
         return;
     }
     const respuesta = await editarClientes(formValues);
@@ -102,7 +99,7 @@ const RemoveCliente = async(e)=>{
     { field: 'CORREO', headerName: 'Correo', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.CORREO}</>},
     { field: 'acciones', headerName: 'Acciones', flex:1 , minWidth: 150 , renderCell: (params) => 
     <div style={{display:'flex', gap:'10px' , alignItems: 'center'}}>
-      <Boton variant='contained'  onClick={(e) => handleOpen(params.row,e)}>
+      <Boton variant='contained'  onClick={(e) => handleOpenEditar(params.row,e)}>
         <FontAwesomeIcon   icon={faPenToSquare} />
         Editar
       </Boton>
@@ -134,7 +131,7 @@ const RemoveCliente = async(e)=>{
             
         />
         
-        <ModalEditar open={open} handleClose={handleClose} handleEditar={handleEditarCliente} onChange={onChange} nombre={nombre} correo={correo} />
+        <ModalEditar error={alerta}  open={openEditar} handleClose={handleCloseEditar} handleEditar={handleEditarCliente} onChange={onChange} nombre={nombre} correo={correo} />
 
     </div>
     </>
