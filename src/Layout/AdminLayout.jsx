@@ -142,6 +142,7 @@ const Container = styled.div`
   justify-content: center;
   /* align-items: center; */
   margin: 0 auto;  
+  background-color: #f3f4f6;
   padding-top: 1rem;
 `;
 

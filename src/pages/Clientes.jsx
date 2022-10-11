@@ -120,7 +120,7 @@ const RemoveCliente = async(e)=>{
         <ModalAgregar error={alerta}  open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
         {/* -------------------FORM------------------------ */}
         <DataGrid
-            style={{  width: '70vw' }}
+            style={{  width: '70vw' , backgroundColor: 'white'}}
             rows={clientes}
             getRowId={(row)=>row.ID}
             columns={columns}

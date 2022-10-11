@@ -177,5 +177,13 @@ export const activarSubasta = async(datos)=>{
     } catch (error) {
         console.log(error)
     }
+}
 
+export const activarSubastaTransport = async(datos) =>{
+    try {
+        const {data} = await clienteAxios.put('/admin/subasta/transportista/activar', datos);
+        console.log(data)
+    } catch (error) {
+        console.log(error)
+    }
 }

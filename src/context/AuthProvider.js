@@ -30,8 +30,7 @@ export const AuthProvider = ({ children }) => {
                 const {data} = await clienteAxios('/usuario/perfil', config)
                 setAuth(data)
                 setConfig(config)
-
-                while ((token == null) && (pathname === '/inicio' || pathname === '/inicio/productores' || pathname === '/inicio/transportistas' || pathname === '/inicio/clientes')){
+                while ((token === undefined) && (pathname === '/#/inicio' || pathname === '/inicio/productores' || pathname === '/inicio/transportistas' || pathname === '/inicio/clientes')){
                     navigate('/')
                     return
                 }

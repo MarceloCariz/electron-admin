@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { activarSubasta, obtenerEnvios } from '../helpers/getAdmin'
+import { activarSubasta, activarSubastaTransport, obtenerEnvios } from '../helpers/getAdmin'
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
 import styled from 'styled-components'
-import { Button, InputLabel, MenuItem, Select, Typography } from '@mui/material'
+import { Box, Button, InputLabel, MenuItem, Select, Typography } from '@mui/material'
 
 const Pedidos = () => {
     const [pedidos, setPedidos] = useState([]);
@@ -28,13 +28,19 @@ const Pedidos = () => {
         setShow(!show);
       };
 
-    const submit = async(e) =>{
+    const submit = async(ele, e) =>{
         e.preventDefault();
         const fecha = new Date(Date.now());
         const fecha2 = fecha.setMinutes(fecha.getMinutes() + Number(tiempo.minutos));
       // console.log(new Date(fecha2).toISOString())
         const fecha_activacion = new Date(fecha2).toISOString()
         const data = {referencia_compra: tiempo.id, fecha_activacion, activo: 'true'}
+        if(ele.some(({ESTADO_ENVIO})=>(ESTADO_ENVIO ==='bodega'))){
+          await activarSubastaTransport(data);
+          return;
+        }
+
+
         await activarSubasta(data);
     }
   return (
@@ -43,7 +49,7 @@ const Pedidos = () => {
         {pedidos.length > 0 ? 
         
             pedidos.map((ele, i)=>(
-                <CardPedido  color={'black'} container direction="column" justifyContent="center" spacing={1} alignItems="center" gap={2}   xs={4} sm={4} md={2} key={ele[0].REFERENCIA_COMPRA}>
+                <CardPedido  color={'black'}  direction="column" justifyContent="center" spacing={1} alignItems="center" gap={2}   xs={4} sm={4} md={2} key={ele[0].REFERENCIA_COMPRA}>
                     
                   <Typography variant='h6'>  Numero pedido{" "} <span className="text-black font-bold">#{ele[0].REFERENCIA_COMPRA}</span>{" "}</Typography>
                   
@@ -53,7 +59,7 @@ const Pedidos = () => {
 
                   <Typography> {ele.some(({ESTADO_ENVIO})=>(ESTADO_ENVIO === 'pendiente')) ? ele.filter((e)=>(e.ESTADO_ENVIO === 'pendiente' && e.ESTADO_ENVIO)).length + " pedidos" : ""}</Typography>
                   
-                  <Button ref={idPedido} id={i} onClick={(e)=> onClick({i},e)}  variant='contained'>{show && Number(idPedido.current.id) === i ? 'cerrar' : 'ver'}</Button>
+                  <Button ref={idPedido} id={i} onClick={(e)=> onClick({i},e)}  variant='contained'>{show && Number(idPedido.current.id) === i ? 'cerrar' : 'Ver Productos'}</Button>
                   <InputLabel id="demo-simple-select-label">Tiempo</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
@@ -71,19 +77,20 @@ const Pedidos = () => {
 
                   {show && Number(idPedido.current.id) === i && 
                      <Productos >
-
+                        <Typography>Productos del pedido</Typography>
                         {ele.map((e, i)=>(
                             <div style={{display: 'flex' , alignItems: 'center', fontWeight: '800', gap:'4px'}} key={i}>
-                                
                                 {(e.ESTADO_ENVIO === 'pendiente' && <p>p</p> ) || (e.ESTADO_ENVIO === 'asignado' && <p>A</p>) || (e.ESTADO_ENVIO === 'bodega' && <p>B</p>)}
                                 <Producto pendiente={e.ESTADO_ENVIO === 'pendiente' ? 'true' : 'false'} >{e.NOMBRE_PRODUCTO}</Producto>
                             </div>
                         ))}
                   </Productos>
                   }
-                {ele.some(({ESTADO_ENVIO})=>(ESTADO_ENVIO === 'pendiente')) && (
-                 <form action="" onSubmit={submit}>
-                    <Button type="submit"  variant='contained' color='success'>Activar Subasta</Button>
+                {ele.some(({ESTADO_ENVIO,TIPO_VENTA})=>(ESTADO_ENVIO === 'pendiente' || (ESTADO_ENVIO === 'bodega' && TIPO_VENTA === 'externo'))) && (
+                 <form action="" onSubmit={(e) => submit(ele,e)}>
+                    <Button type="submit"  variant='contained' color='success'>
+                      {ele.some(({ESTADO_ENVIO})=>(ESTADO_ENVIO === 'pendiente'))? 'Activar subasta productor': 'Activar subasta transportista'}
+                    </Button>
                  </form> 
 
                 )}
@@ -94,7 +101,7 @@ const Pedidos = () => {
 
         
         : 
-        'no hay Pedidos'}
+        '...Cargando'}
         
         
         </Grid>
@@ -109,21 +116,28 @@ const Producto = styled(Typography)`
 
     border-radius: 0px 10px 10px 0px;
     /* padding: 2px 2px; */
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
     
 `;
 const Productos = styled.div`
-    height: 200px;
+    height: auto;
     overflow-y: scroll;
+    ::-webkit-scrollbar{
+      display: none;
+   };
     display: flex;
     flex-direction: column;
     gap: 10px;
 
 `
-const CardPedido = styled(Grid2)`
+const CardPedido = styled(Box)`
     background-color: white;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 10px 10px;
+    max-width: 500px;
 `;
 
 const Div = styled.div`

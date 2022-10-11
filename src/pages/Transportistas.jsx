@@ -129,7 +129,7 @@ const columns =[
         <ModalAgregar error={alerta}  open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
         {/* -------------------FORM------------------------ */}
         <DataGrid
-            style={{  width: '70vw' }}
+            style={{  width: '70vw', backgroundColor: 'white' }}
             rows={transportistas}
             getRowId={(row)=>row.ID}
             columns={columns}

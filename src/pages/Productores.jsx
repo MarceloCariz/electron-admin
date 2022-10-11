@@ -119,7 +119,7 @@ const columns =[
         </Boton>
         <ModalAgregar error={alerta} open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
         <DataGrid
-            style={{  width: '70vw' }}
+            style={{  width: '70vw' , backgroundColor: 'white'}}
             rows={productores}
             getRowId={(row)=>row.ID}
             columns={columns}
