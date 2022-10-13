@@ -15,6 +15,9 @@ const Inicio = () => {
     <Container>
         <Titulo>Inicio</Titulo>
         <Img src={grafico} alt="" />
+        <>
+        
+        </>
     </Container>
   )
 }
@@ -29,7 +32,7 @@ const Img = styled.img`
     width: 80%;
 `
 const Titulo = styled.h1`
-color: white;
+color: black;
 text-align:center;
 `;
 
