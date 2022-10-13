@@ -1,13 +1,14 @@
 import React from 'react'
 import { BrowserRouter, HashRouter, Route, Routes} from 'react-router-dom'
+import { AuthProvider } from '../context/AuthProvider'
 import AdminLayout from '../Layout/AdminLayout'
 import Inicio from '../pages/Inicio'
 import Login from '../pages/Login'
 import Productores from '../pages/Productores'
 import Transportistas from '../pages/Transportistas'
 import Clientes from '../pages/Clientes'
-import { AuthProvider } from '../context/AuthProvider'
 import Pedidos from '../pages/Pedidos'
+import Ventas from '../pages/Ventas'
 
 
 const Router = () => {  
@@ -26,6 +27,7 @@ const Router = () => {
                <Route path='transportistas' element={<Transportistas/>}/>
                <Route path='clientes' element={<Clientes/>}/>
                <Route path='pedidos' element={<Pedidos/>}/>
+               <Route path='ventas' element={<Ventas/>}/>
             </Route>
         </Routes>
     </AuthProvider>

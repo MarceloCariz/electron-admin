@@ -57,7 +57,7 @@ const AdminLayout = () => {
                     <Icon component={BarChartIcon} />
                         Graficas</Tituloopcion>
                     <ContainerOpciones>
-                        <SubtituloOpcion to={''}>Ventas</SubtituloOpcion>
+                        <SubtituloOpcion to={'ventas'}>Ventas</SubtituloOpcion>
                         <SubtituloOpcion to={''}>Informes</SubtituloOpcion>
                     </ContainerOpciones>
                 </div>

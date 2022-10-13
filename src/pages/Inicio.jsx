@@ -15,9 +15,6 @@ const Inicio = () => {
     <Container>
         <Titulo>Inicio</Titulo>
         <Img src={grafico} alt="" />
-        <>
-        
-        </>
     </Container>
   )
 }
