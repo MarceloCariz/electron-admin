@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
-import axios from 'axios';
 
-import {  faPenToSquare } from '@fortawesome/free-regular-svg-icons';
-import { faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@mui/material';
 
@@ -17,94 +15,63 @@ import DoughnutChart from '../components/Charts/DoughnutChart';
 //sandbox Import
 import { UserData } from "../Data";
 import { obtenerOrdCompra } from '../helpers/getAdmin'
+import { configTV, configTP } from '../components/Charts/Cluster' 
 
 
 function Ventas() {
-    const navigate = useNavigate();
-    const [OrdCompra, setOrdCompra] = useState([]);
-    let URL = 'http://168.138.133.24:4000/api/admin/envios/graficos/datos'
+  const navigate = useNavigate();
+  const [OrdCompra, setOrdCompra] = useState([]);
 
-    useEffect(() => {
-      if (localStorage.getItem("token") === "" ) {
-        navigate('/')
-      }
-
-      cargarOrdCompra();
-    })
-
-    
+  useEffect(() => {
+    if (localStorage.getItem("token") === "" ) {
+      navigate('/')
+    }  
     const cargarOrdCompra = async()=>{
       const resultado = await obtenerOrdCompra();
-      setOrdCompra(resultado);
-  }
-    
-    const [userData, setUserData] = useState({
-      labels: UserData.map((data) => data.year),
-      datasets: [
-        {
-          label: "a",
-          data: UserData.map((data) => data.userGain),
-          backgroundColor: [
-            "rgba(75,192,192,1)",
-            "#ecf0f1",
-            "#50AF95",
-            "#f3ba2f",
-            "#2a71d0",
-          ],
-          borderColor: "black",
-          borderWidth: 2,
-        },
-      ],
-    }); 
-    
+      setOrdCompra(resultado);  
+    }
+
+    cargarOrdCompra();
+  })
 
   const handleReset = async() =>{
-    const resultado = await obtenerOrdCompra();
-    const Tipo_Ventas = resultado.tipoVenta;
-
-     
-    console.log(Tipo_Ventas)
-    console.log(Tipo_Ventas.length)
-    console.log("-----------------------------------------")
-    console.log(Tipo_Ventas.map((c) => {return c.TIPO_VENTA}))
-    console.log(Tipo_Ventas.map((c) => {return c.CANTIDAD}))
-    console.log("-----------------------------------------")
-
-
-
-
-
-
-
-    //console.log(OrdCompra)
-    //console.log("-----------------------------------------")
-
-    //const Tipo_Venta = OrdCompra.tipoVenta[1].TIPO_VENTA; 
-    //const Cantidades = OrdCompra.tipoVenta[1].CANTIDAD;
-    //console.log(Tipo_Venta + ": " + Cantidades)
-
-    //
-    //
-    //console.log("-----------------------------------------")
-    //console.log(registLog2.CANTIDAD )
-    //console.log("-----------------------------------------")
-    //console.log(OrdCompra.tipoVenta[1])
-    //console.log("-----------------------------------------")
-    //console.log(OrdCompra.tipoVenta[1].TIPO_VENTA)
-    //console.log(OrdCompra.tipoVenta[1].CANTIDAD)
-
+    console.log(OrdCompra)
   }
 
+  var LabelS = OrdCompra?.tipoVenta?.map(function(e) {
+    return e.TIPO_VENTA;
+  });
+  var DataS = OrdCompra?.tipoVenta?.map(function(e) {
+    return e.CANTIDAD;
+  });
+  const config = {
+    labels: LabelS,
+    datasets: [
+      {
+        label: 'EXAMPLE TITLE',
+        data: DataS,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
 
 
-
-
-
-
-
-    
-    
-  
     return (
       <Container>
         <Titulo>Ventas</Titulo>
@@ -112,9 +79,17 @@ function Ventas() {
           <FontAwesomeIcon icon={faUserPlus}/>
           Response Log
         </Boton>
-
+ 
         <div style={{ width: 700 }}>
-            <PieChart chartData={userData} />
+            <PieChart chartData={config} />
+        </div>
+{/**
+        <div style={{ width: 700 }}>
+            <PieChart chartData={configTV} />
+        </div>
+*/}
+        <div style={{ width: 700 }}>
+            <PieChart chartData={configTP} />
         </div>
 
       </Container>
