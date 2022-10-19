@@ -187,3 +187,14 @@ export const activarSubastaTransport = async(datos) =>{
         console.log(error)
     }
 }
+
+export const obtenerOrdCompra = async() =>{
+    try {
+        const {data} = await  clienteAxios('/admin/envios/graficos/datos');
+        return data
+    } catch (error) {
+        console.log("Error GetAdmins.jsx | Tipo: Get | Act: obtenerOrdCompra")
+        console.log(error)
+        console.log("Error GetAdmins.jsx ==================================")
+    }
+}

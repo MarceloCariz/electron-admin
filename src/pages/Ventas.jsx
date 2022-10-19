@@ -1,42 +1,48 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
-import grafico from './img/grafico.jpg'
+import axios from 'axios';
 
+import {  faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import { faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from '@mui/material';
+
+//Graficos
 import BarChart from "../components/Charts/BarChart";
 import LineChart from "../components/Charts/LineChart";
 import PieChart from "../components/Charts/PieChart";
+import DoughnutChart from '../components/Charts/DoughnutChart';
+
 //sandbox Import
 import { UserData } from "../Data";
-import { activarSubasta, activarSubastaTransport, obtenerEnvios } from '../helpers/getAdmin'
+import { obtenerOrdCompra } from '../helpers/getAdmin'
 
 
 function Ventas() {
     const navigate = useNavigate();
-    const [pedidos, setPedidos] = useState([]);
-  
+    const [OrdCompra, setOrdCompra] = useState([]);
+    let URL = 'http://168.138.133.24:4000/api/admin/envios/graficos/datos'
+
     useEffect(() => {
       if (localStorage.getItem("token") === "" ) {
         navigate('/')
       }
 
-      const cargarPedidos = async()=>{
-          const resultado = await obtenerEnvios();
-          setPedidos(resultado.sort())
-          //console.log(resultado.sort())
-      }
-      cargarPedidos()
+      cargarOrdCompra();
     })
+
     
-    //console.log(pedidos[0][0])
-
-
-
+    const cargarOrdCompra = async()=>{
+      const resultado = await obtenerOrdCompra();
+      setOrdCompra(resultado);
+  }
+    
     const [userData, setUserData] = useState({
       labels: UserData.map((data) => data.year),
       datasets: [
         {
-          label: "Users Gained",
+          label: "a",
           data: UserData.map((data) => data.userGain),
           backgroundColor: [
             "rgba(75,192,192,1)",
@@ -49,7 +55,52 @@ function Ventas() {
           borderWidth: 2,
         },
       ],
-    });
+    }); 
+    
+
+  const handleReset = async() =>{
+    const resultado = await obtenerOrdCompra();
+    const Tipo_Ventas = resultado.tipoVenta;
+
+     
+    console.log(Tipo_Ventas)
+    console.log(Tipo_Ventas.length)
+    console.log("-----------------------------------------")
+    console.log(Tipo_Ventas.map((c) => {return c.TIPO_VENTA}))
+    console.log(Tipo_Ventas.map((c) => {return c.CANTIDAD}))
+    console.log("-----------------------------------------")
+
+
+
+
+
+
+
+    //console.log(OrdCompra)
+    //console.log("-----------------------------------------")
+
+    //const Tipo_Venta = OrdCompra.tipoVenta[1].TIPO_VENTA; 
+    //const Cantidades = OrdCompra.tipoVenta[1].CANTIDAD;
+    //console.log(Tipo_Venta + ": " + Cantidades)
+
+    //
+    //
+    //console.log("-----------------------------------------")
+    //console.log(registLog2.CANTIDAD )
+    //console.log("-----------------------------------------")
+    //console.log(OrdCompra.tipoVenta[1])
+    //console.log("-----------------------------------------")
+    //console.log(OrdCompra.tipoVenta[1].TIPO_VENTA)
+    //console.log(OrdCompra.tipoVenta[1].CANTIDAD)
+
+  }
+
+
+
+
+
+
+
 
     
     
@@ -57,15 +108,15 @@ function Ventas() {
     return (
       <Container>
         <Titulo>Ventas</Titulo>
-        <div style={{ width: 700 }}>
-            <BarChart chartData={userData} />
-        </div>
-        <div style={{ width: 700 }}>
-            <LineChart chartData={userData} />
-        </div>
+        <Boton onClick={handleReset} variant='contained'>
+          <FontAwesomeIcon icon={faUserPlus}/>
+          Response Log
+        </Boton>
+
         <div style={{ width: 700 }}>
             <PieChart chartData={userData} />
         </div>
+
       </Container>
     )
 }
@@ -84,4 +135,10 @@ color: black;
 text-align:center;
 `;
 
+const Boton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  gap: 10px;
+`
 export default Ventas
