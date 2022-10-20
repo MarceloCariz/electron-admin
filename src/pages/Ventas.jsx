@@ -9,8 +9,8 @@ import { Button } from '@mui/material';
 //Graficos
 import BarChart from "../components/Charts/BarChart";
 import LineChart from "../components/Charts/LineChart";
-import PieChart from "../components/Charts/PieChart";
-import DoughnutChart from '../components/Charts/DoughnutChart';
+import PieChart_TipoVenta from '../components/Charts/PieChart_TipoVenta';
+import DoughnutChart_TipoPago from '../components/Charts/DoughnutChart_TipoPago';
 
 //sandbox Import
 import { UserData } from "../Data";
@@ -81,7 +81,7 @@ function Ventas() {
         </Boton>
  
         <div style={{ width: 700 }}>
-            <PieChart chartData={config} />
+            <PieChart_TipoVenta tipoVenta={OrdCompra.tipoVenta}/>
         </div>
 {/**
         <div style={{ width: 700 }}>
@@ -89,7 +89,7 @@ function Ventas() {
         </div>
 */}
         <div style={{ width: 700 }}>
-            <PieChart chartData={configTP} />
+            <DoughnutChart_TipoPago estadoPago={OrdCompra.estadoPago} />
         </div>
 
       </Container>
