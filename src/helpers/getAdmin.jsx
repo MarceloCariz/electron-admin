@@ -124,10 +124,13 @@ export const obtenerClientes = async()=>{
 
 }
 
-export const editarClientes = async(clienteID,datos)=>{
+export const editarClientes = async(datos)=>{
+    console.log(datos)
     try {
-        await clienteAxios.put(`/admin/cliente/actualizar/${ clienteID.toString() }`, datos)
+        //await clienteAxios.put(`/admin/cliente/actualizar/${ clienteID.toString() }`, datos)
         //.then( res => console.log("Cliente n° "+ clienteID + " borrado!"))
+        const {data} =  await clienteAxios.put(`/admin/cliente/actualizar/${datos.id}`, {nombre: datos.nombre, correo: datos.correo})
+        return data
 
     } catch (error) {
         console.log("Error GetAdmins.jsx | Tipo: Put | Act: editarClientes")

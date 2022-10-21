@@ -31,7 +31,6 @@ const Transportistas = () => {
     const cargartransportistas = async () => {
       const respuesta = await obtenerTransportistas();
       console.log(respuesta);
-      console.log(respuesta);
       setTransportistas(respuesta);
     };
 

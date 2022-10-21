@@ -10,18 +10,19 @@ import { DataGrid } from '@mui/x-data-grid';
 import ModalAgregar from '../components/ui/ModalAgregar';
 import ModalEditar from '../components/ui/ModalEditar';
 
+
 const Clientes = () => {
   // Datos
-  const [clientes, setClientes] = useState([]);
-  // const [activeModal, setActiveModal] = useState(false);
   const [alerta, setAlerta] = useState("")
   const [formValues, setFormValues] = useState({nombre: '', correo: '', id: 0, password: ''});
-  const {nombre, correo, password } = formValues;
-
+  const [clientes, setClientes] = useState([]);
   //MODALES
   const [openAgregar, setOpenAgregar] = useState(false);
-  const [openEditar, setOpenEditar] = useState(false);
+  const [openEditar, setOpenEditar] = useState(false);;
+  //
   const navigate = useNavigate();
+  
+  const {nombre, correo, password } = formValues
 
   useEffect(() => {
       if (localStorage.getItem("token") == "" ) {
@@ -34,8 +35,11 @@ const Clientes = () => {
       }
   
       cargarClientes();
+      console.log(clientes);
     },[] )
   
+
+
   // FUNCIONES CERRAR MODAL EDITAR
   const handleOpenEditar = (e) => {
     setOpenEditar(true);
@@ -57,7 +61,7 @@ const Clientes = () => {
   const onChange = ({target}) =>{
     setFormValues({
       ...formValues,
-      [target.name] : target.value
+      [target.name]: target.value
     });
   }
 
@@ -71,7 +75,6 @@ const Clientes = () => {
       return;
   }
     const respuesta = await agregarClientes(formValues);
-  
     window.location.reload();
   
   }
@@ -83,7 +86,7 @@ const Clientes = () => {
       setTimeout(() => {
         setAlerta('');
       }, 2000);
-        return;
+      return;
     }
     const respuesta = await editarClientes(formValues);
     window.location.reload();
