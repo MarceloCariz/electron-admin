@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Unstable_Grid2';
 
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '@mui/material';
+import { Box, Button, InputLabel, MenuItem, Select, Typography } from '@mui/material'
 
 //Graficos
-import BarChart from "../components/Charts/BarChart";
-import LineChart from "../components/Charts/LineChart";
 import PieChart_TipoVenta from '../components/Charts/PieChart_TipoVenta';
 import DoughnutChart_TipoPago from '../components/Charts/DoughnutChart_TipoPago';
+import LineChart_CompraXdia from '../components/Charts/LineChart_CompraXdia';
+import BarChart_stockProd from '../components/Charts/BarChart_stockProd';
+import LineChart_CompraXmes from '../components/Charts/LineChart_CompraXmes';
 
 //sandbox Import
-import { UserData } from "../Data";
 import { obtenerOrdCompra } from '../helpers/getAdmin'
-import { configTV, configTP } from '../components/Charts/Cluster' 
 
+const Item = styled(Paper)(() => ({
+  textAlign: 'center',
+}));
 
 function Ventas() {
   const navigate = useNavigate();
@@ -73,47 +77,49 @@ function Ventas() {
 
 
     return (
-      <Container>
-        <Titulo>Ventas</Titulo>
-        <Boton onClick={handleReset} variant='contained'>
-          <FontAwesomeIcon icon={faUserPlus}/>
-          Response Log
-        </Boton>
- 
-        <div style={{ width: 700 }}>
-            <PieChart_TipoVenta tipoVenta={OrdCompra.tipoVenta}/>
-        </div>
-{/**
-        <div style={{ width: 700 }}>
-            <PieChart chartData={configTV} />
-        </div>
-*/}
-        <div style={{ width: 700 }}>
+      <Grilla container spacing={3}>
+        <Grid xs="auto">
+          <Grafics>
             <DoughnutChart_TipoPago estadoPago={OrdCompra.estadoPago} />
-        </div>
-
-      </Container>
+          </Grafics>
+        </Grid>
+        <Grid xs="auto">
+          <Grafics>
+            <PieChart_TipoVenta tipoVenta={OrdCompra.tipoVenta}/>
+          </Grafics>
+        </Grid>
+        <Grid xs="auto">
+          <Grafics>
+            <LineChart_CompraXdia comprasPorDia={OrdCompra.comprasPorDia} />
+          </Grafics>
+        </Grid>
+        <Grid xs="auto">
+          <Grafics>
+            <BarChart_stockProd stockProductosNombre={OrdCompra.stockProductosNombre} />
+          </Grafics>
+        </Grid>
+        <Grid xs="auto">
+          <Grafics>
+            <LineChart_CompraXmes comprasPorMes={OrdCompra.comprasPorMes} />
+          </Grafics>
+        </Grid>
+      </Grilla>
     )
 }
 
-const Container = styled.div`
+const Grafics = styled(Paper)`
+    border-radius: 10px;
     display: flex;
-    align-items: center;
     flex-direction: column;
-`
-const Img = styled.img`
-    object-fit: contain;
-    width: 80%;
-`
-const Titulo = styled.h1`
-color: black;
-text-align:center;
+    padding: 10px 10px 10px 10px;
+    max-width: 100%;
 `;
 
-const Boton = styled(Button)`
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  gap: 10px;
-`
+const Grilla = styled(Grid)`
+  padding-left: 1rem;
+`;
+
+
+
+
 export default Ventas
