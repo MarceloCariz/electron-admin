@@ -89,18 +89,18 @@ function Ventas() {
           </Grafics>
         </Grid>
         <Grid xs="auto">
-          <Grafics>
-            <LineChart_CompraXdia comprasPorDia={OrdCompra.comprasPorDia} />
+          <Grafics  style={{ width: 450 }}>
+            <LineChart_CompraXdia comprasPorDia={OrdCompra.comprasPorDia}/>
           </Grafics>
         </Grid>
         <Grid xs="auto">
-          <Grafics>
-            <BarChart_stockProd stockProductosNombre={OrdCompra.stockProductosNombre} />
+          <Grafics  style={{ width: 450 }}>
+            <BarChart_stockProd stockProductosNombre={OrdCompra.stockProductosNombre}/>
           </Grafics>
         </Grid>
         <Grid xs="auto">
-          <Grafics>
-            <LineChart_CompraXmes comprasPorMes={OrdCompra.comprasPorMes} />
+          <Grafics style={{ width: 450 }}>
+            <LineChart_CompraXmes comprasPorMes={OrdCompra.comprasPorMes}/>
           </Grafics>
         </Grid>
       </Grilla>
@@ -117,9 +117,8 @@ const Grafics = styled(Paper)`
 
 const Grilla = styled(Grid)`
   padding-left: 1rem;
+  align-content: flex-start;
 `;
-
-
 
 
 export default Ventas
