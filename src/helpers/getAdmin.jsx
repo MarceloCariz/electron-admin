@@ -201,3 +201,33 @@ export const obtenerOrdCompra = async() =>{
         console.log("Error GetAdmins.jsx ==================================")
     }
 }
+
+//Contratos
+
+export const obtenerContratos = async()=>{
+    try {
+        const {data} = await clienteAxios('/admin/contratos');
+        return data
+    } catch (error) {
+        console.log("Error GetAdmins.jsx | Tipo: Get | Act: obtenerContratos")
+        console.log(error)
+        console.log("Error GetAdmins.jsx ==================================")
+    }
+
+}
+
+export const renovarContrato = async(datos)=>{
+    console.log(datos)
+    try {
+        //await clienteAxios.put(`/admin/cliente/actualizar/${ clienteID.toString() }`, datos)
+        //.then( res => console.log("Cliente n° "+ clienteID + " borrado!"))
+        const {data} =  await clienteAxios.put(`/admin/cliente/actualizar/${datos.id}`, {nombre: datos.fchStart, correo: datos.fchEnd})
+        return data
+
+    } catch (error) {
+        console.log("Error GetAdmins.jsx | Tipo: Put | Act: renovarContrato")
+        console.log(error)
+        console.log("Error GetAdmins.jsx ==================================")
+    }
+
+}

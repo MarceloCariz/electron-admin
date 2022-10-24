@@ -18,7 +18,7 @@ const Clientes = () => {
   const [clientes, setClientes] = useState([]);
   //MODALES
   const [openAgregar, setOpenAgregar] = useState(false);
-  const [openEditar, setOpenEditar] = useState(false);;
+  const [openEditar, setOpenEditar] = useState(false);
   //
   const navigate = useNavigate();
   

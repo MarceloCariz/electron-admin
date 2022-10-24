@@ -9,6 +9,7 @@ import Transportistas from '../pages/Transportistas'
 import Clientes from '../pages/Clientes'
 import Pedidos from '../pages/Pedidos'
 import Ventas from '../pages/Ventas'
+import Contratos from '../pages/Contratos'
 
 
 const Router = () => {  
@@ -28,6 +29,7 @@ const Router = () => {
                <Route path='clientes' element={<Clientes/>}/>
                <Route path='pedidos' element={<Pedidos/>}/>
                <Route path='ventas' element={<Ventas/>}/>
+               <Route path='contratos' element={<Contratos/>}/>
             </Route>
         </Routes>
     </AuthProvider>
