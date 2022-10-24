@@ -10,6 +10,8 @@ import Clientes from '../pages/Clientes'
 import Pedidos from '../pages/Pedidos'
 import Ventas from '../pages/Ventas'
 import Subastas from '../pages/Subastas'
+import { Activos } from '../pages/contratos/Activos'
+import { Vencidos } from '../pages/contratos/Vencidos'
 
 
 const Router = () => {  
@@ -30,6 +32,8 @@ const Router = () => {
                <Route path='pedidos' element={<Pedidos/>}/>
                <Route path='ventas' element={<Ventas/>}/>
                <Route path='subastas' element={<Subastas/>}/>
+               <Route path='contratos/activos' element={<Activos/>}/>
+               <Route path='contratos/vencidos' element={<Vencidos/>}/>
             </Route>
         </Routes>
     </AuthProvider>

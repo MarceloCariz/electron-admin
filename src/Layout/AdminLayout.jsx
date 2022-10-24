@@ -48,8 +48,8 @@ const AdminLayout = () => {
                         <Icon component={AssignmentIcon} />
                         Contratos</Tituloopcion>
                     <ContainerOpciones>
-                        <SubtituloOpcion to={''}>Productores</SubtituloOpcion>
-                        <SubtituloOpcion to={''}>Transportistas</SubtituloOpcion>
+                        <SubtituloOpcion to={'contratos/activos'}>Activos</SubtituloOpcion>
+                        <SubtituloOpcion to={'contratos/vencidos'}>Renovación</SubtituloOpcion>
                     </ContainerOpciones>
                 </div>
                 <div>
