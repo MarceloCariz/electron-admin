@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, Paper, Typography } from "@mui/material"; 
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { obtenerContratos } from "../../helpers/getAdmin";
@@ -21,6 +21,9 @@ export const Activos = () => {
   return (
     <Container>
       <Typography variant="h4" >Contratos Activos</Typography>
+        {cargando && contratos.length === 0 && 
+            <CircularProgress color="inherit"/>
+        }
       <Grid    container spacing={4} >
             {cargando === false && contratos.length > 0 &&
             (

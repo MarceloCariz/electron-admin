@@ -1,4 +1,4 @@
-import { Box, Button, Grid, InputLabel, MenuItem, Paper, Select, Typography } from "@mui/material";
+import { Box, Button, Grid, InputLabel, MenuItem, Paper, Select, CircularProgress, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { obtenerContratos, renovarContrato } from "../../helpers/getAdmin";
@@ -42,6 +42,10 @@ export const Vencidos = () => {
   return (
     <Container>
       <Typography variant="h4" >Solicitudes Renovación Contratos</Typography>
+      
+        {cargando && contratos.length === 0 && 
+            <CircularProgress color="inherit"/>
+        }
       <Grid    container spacing={4} >
             {cargando === false && contratos.length > 0 &&
             (
