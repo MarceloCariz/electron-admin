@@ -39,8 +39,8 @@ const AdminLayout = () => {
                         <Icon component={AllInboxIcon} />
                         Pedidos</Tituloopcion>
                     <ContainerOpciones>
-                        <SubtituloOpcion to={'pedidos'}>Subastas</SubtituloOpcion>
-                        <SubtituloOpcion to={''}>Pedidos</SubtituloOpcion>
+                        <SubtituloOpcion to={'subastas'}>Subastas</SubtituloOpcion>
+                        <SubtituloOpcion to={'pedidos'}>Pedidos</SubtituloOpcion>
                     </ContainerOpciones>
                 </div>
                 <div>

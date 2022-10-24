@@ -1,4 +1,5 @@
 import clienteAxios from "../axios"
+import { sortBy } from "../utils/sortByDate";
 
 
 // <---------------------------- admin ---------------------------->
@@ -167,8 +168,8 @@ export const obtenerEnvios = async() =>{
         return acc
       },[]);
      
-
-    return obj
+    
+    return obj.sort(sortBy('FECHA_COMPRA'));
 }
 
 export const activarSubasta = async(datos)=>{

@@ -1,64 +1,74 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {obtenerEnvios } from '../helpers/getAdmin'
+import { activarSubasta, activarSubastaTransport, obtenerEnvios } from '../helpers/getAdmin'
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
 import styled from 'styled-components'
-import { Box, Button, CircularProgress, Typography } from '@mui/material'
-// import { Spinnner } from '../components/ui/Spinnner'
+import { Box, Button, CircularProgress, InputLabel, MenuItem, Select, Typography } from '@mui/material'
 
-const Pedidos = () => {
+const Subastas = () => {
     const [pedidos, setPedidos] = useState([]);
     const [show, setShow] = useState(false);
-    const [cargando, setCargando] = useState(false);
+    const [tiempo, setTiempo] = useState({minutos: 1, id: 0 })
+    const [cargando, setCargando] = useState(false)
     const idPedido = useRef();
     useEffect(() => {
         const cargarPedidos = async()=>{
-          setCargando(true);
-          const resultado = await obtenerEnvios();
-          setPedidos(resultado);
-          setCargando(false);
+            setCargando(true);
+            const resultado = await obtenerEnvios();
+            const filtrado = resultado.map((ele)=>(ele.filter(({ESTADO_ENVIO,TIPO_VENTA})=>(TIPO_VENTA === 'externo' &&  (ESTADO_ENVIO ==='pendiente' ||  ESTADO_ENVIO ==='bodega') ))));
+            const filtradoFinal = (filtrado.filter((ele)=>(ele.length > 0)));
+            setPedidos(filtradoFinal)
+            setCargando(false);
 
         }
         cargarPedidos();
     }, [])
     
-
+    const onChange = (id,e) =>{
+        setTiempo(e.target.value)
+        setTiempo({minutos: e.target.value, id: id})
+        console.log(id)
+    }
     const onClick = (e) => {
         // console.log(e.i)
         idPedido.current.id = e.i;
         setShow(!show);
       };
 
-    // const submit = async(ele, e) =>{
-    //     e.preventDefault();
-    //     const fecha = new Date(Date.now());
-    //     const fecha2 = fecha.setMinutes(fecha.getMinutes() + Number(tiempo.minutos));
-    //   // console.log(new Date(fecha2).toISOString())
-    //     const fecha_activacion = new Date(fecha2).toISOString()
-    //     const data = {referencia_compra: tiempo.id, fecha_activacion, activo: 'true'}
-    //     if(ele.some(({ESTADO_ENVIO})=>(ESTADO_ENVIO ==='bodega'))){
-    //       await activarSubastaTransport(data);
-    //       // window.location.reload();
-    //       return;
-    //     }
+    const submit = async(ele, e) =>{
+        e.preventDefault();
+        const fecha = new Date(Date.now());
+        const fecha2 = fecha.setMinutes(fecha.getMinutes() + Number(tiempo.minutos));
+      // console.log(new Date(fecha2).toISOString())
+        const fecha_activacion = new Date(fecha2).toISOString()
+        const data = {referencia_compra: tiempo.id, fecha_activacion, activo: 'true'}
+        if(ele.some(({ESTADO_ENVIO})=>(ESTADO_ENVIO ==='bodega'))){
+          await activarSubastaTransport(data);
+          // window.location.reload();
+          return;
+        }
 
 
-    //     await activarSubasta(data);
-    //     // window.location.reload();
+        await activarSubasta(data);
+        // window.location.reload();
+
+    }
+
+    // const verPedidosSubasta = () =>{
+
 
     // }
-
-    
   return (
     <Div>
-        <Typography variant='h4' sx={{textAlign:'center'}}>Pedidos</Typography>
+        <Typography variant='h4' sx={{textAlign:'center'}}>Subastas Disponibles</Typography>
+
         {cargando  && pedidos.length === 0 && 
             <CircularProgress color="inherit"/>
         }
-        <Grid  alignItems={'start'}  container  spacing={1} gap={2}   marginTop={5}  xs={2} md={2} sm={12} >
+        <Grid  alignItems={'start'} justifyContent={'space-between'}  container     marginTop={5}  xs={2} md={12} sm={12} >
         {pedidos.length > 0 ? 
         
             pedidos.map((ele, i)=>(
-                <CardPedido  color={'black'}  direction="column" justifyContent="center" spacing={1} alignItems="center" gap={2}   xs={4} sm={4} md={2} key={ele[0].REFERENCIA_COMPRA}>
+                <CardPedido  color={'black'}  direction="column" justifyContent="center" spacing={1} alignItems="center" gap={1}   xs={4} sm={4} md={2} key={ele[0].REFERENCIA_COMPRA}>
                     
                   <Typography variant='h6'>  Numero pedido{" "} <span className="text-black font-bold">#{ele[0].REFERENCIA_COMPRA}</span>{" "}</Typography>
                   <Typography > {ele[0].FECHA_COMPRA}</Typography>
@@ -75,7 +85,7 @@ const Pedidos = () => {
                   
                   {/* {ele.some(({ESTADO_ENVIO,TIPO_VENTA})=>(ESTADO_ENVIO === 'pendiente' || (ESTADO_ENVIO === 'bodega' && TIPO_VENTA === 'externo'))) &&
                   (
-                    <>
+                    <> */}
                       <InputLabel id="demo-simple-select-label">Tiempo</InputLabel>
                       <Select
                           labelId="demo-simple-select-label"
@@ -90,7 +100,7 @@ const Pedidos = () => {
                         <MenuItem value="5">+5  minutos</MenuItem>
                         <MenuItem value="10">+10  minutos</MenuItem>
                     </Select>
-                  </>
+                  {/* </>
             )} */}
                   {show && Number(idPedido.current.id) === i && 
                      <Productos >
@@ -103,23 +113,21 @@ const Pedidos = () => {
                         ))}
                   </Productos>
                   }
-                {/* {ele.some(({ESTADO_ENVIO,TIPO_VENTA})=>(ESTADO_ENVIO === 'pendiente' || (ESTADO_ENVIO === 'bodega' && TIPO_VENTA === 'externo'))) && (
+                {/* {ele.some(({ESTADO_ENVIO,TIPO_VENTA})=>(ESTADO_ENVIO === 'pendiente' || (ESTADO_ENVIO === 'bodega' && TIPO_VENTA === 'externo'))) && ( */}
                  <form action="" onSubmit={(e) => submit(ele,e)}>
                     <Button type="submit"  variant='contained' color='success'>
                       {ele.some(({ESTADO_ENVIO})=>(ESTADO_ENVIO === 'pendiente'))? 'Activar subasta productor': 'Activar subasta transportista'}
                     </Button>
                  </form> 
 
-                )} */}
+                {/* // )} */}
 
 
                 </CardPedido>
             ))
 
         
-        :  
-        cargando ? '' : 'no hay pedidos'
-        }
+        : cargando ? '' : 'no hay Subastas'}
         
         
         </Grid>
@@ -174,16 +182,15 @@ const CardPedido = styled(Box)`
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
-  margin-top:2rem;
+align-items: center;
+   gap: 2;
+   margin: 0 auto;
+   margin-top: 2rem;
   width: 90%;
 `;
 
 const Grid = styled(Grid2)`
     margin: 0 auto;
     text-transform: capitalize;
-    display: flex;
-
 `;
-export default Pedidos
+export default Subastas
