@@ -75,6 +75,12 @@ const Contratos = () => {
     console.log("edicion pasada")
     window.location.reload();
   }
+  const handleCambioFormato = (e) =>{
+    console.log("Formato Origen: " + e.FECHA_INICIO)
+    console.log("======================================")
+    console.log("Formato Vista")
+    console.log("======================================")
+  }
 
       
   const columns =[
@@ -83,7 +89,7 @@ const Contratos = () => {
     { field: 'Fecha Termino', headerName: 'FechaTermino', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.FECHA_TERMINO}</>},
     { field: 'acciones', headerName: 'Acciones', flex:1 , minWidth: 150 , renderCell: (params) => 
     <div style={{display:'flex', gap:'10px' , alignItems: 'center'}}>
-      <Boton variant='contained'  onClick={(e) => handleOpenEditar(params.row,e)}>
+      <Boton variant='contained'  onClick={(e) => handleCambioFormato(params.row,e)}>
         <FontAwesomeIcon   icon={faPenToSquare} />
         Editar
       </Boton> {/** 
