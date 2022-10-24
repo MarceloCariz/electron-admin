@@ -2,6 +2,7 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { Box, Typography } from '@mui/material';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -44,19 +45,29 @@ function DoughnutChart_TipoPago({ estadoPago }) {
   };
 
   const options = {
-    plugins:{
-      datalabels:{
+    plugins: {
+      legend: {
+        display: true,
+        align: 'center'
+       
+      },
+      datalabels: {
         display: true,
         color: "black",
-        align:"end",
-        anchor: "end",
-        font: { size: "14" }
+        align: "end",
+        padding: {
+          right: 2,
+        },
+        labels: {
+          title: {
+            font: {
+              weight: "bold"
+            }
+          },
+        },
       }
-    },
-    legend: {
-      display: false
     }
-  }
+  };
   
   
 
@@ -67,7 +78,12 @@ function DoughnutChart_TipoPago({ estadoPago }) {
 
 
 
-  return <Doughnut data={config} options={options} />;
+  return (
+    <Box>
+    <Typography>Tipos de Pago</Typography>
+    <Doughnut style={{width: 400}} data={config} options={options} />
+  </Box>
+  ) ;
 }
 
 export default DoughnutChart_TipoPago
