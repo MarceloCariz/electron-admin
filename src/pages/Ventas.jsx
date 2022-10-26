@@ -4,8 +4,10 @@ import styled from 'styled-components'
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 
-
-
+//Librerias
+import jsPDF from 'jspdf';
+import autotable from 'autotable';
+import maipo from '../pages/img/maipo.PNG';
 //Graficos
 import PieChart_TipoVenta from '../components/Charts/PieChart_TipoVenta';
 import DoughnutChart_TipoPago from '../components/Charts/DoughnutChart_TipoPago';
@@ -36,13 +38,97 @@ function Ventas() {
   })
 
 
+  const  generarReporte = () =>{
+    const doc = new jsPDF('p','mm','a3' );
+    const datosStock = OrdCompra.stockProductosNombre
+    const datoscomprames = OrdCompra.comprasPorMes
+    const datosestadopago = OrdCompra.estadoPago
+    const datoscomprapordia = OrdCompra.comprasPorDia
+    const datosventa = OrdCompra.tipoVenta
 
+    var columnstock = [["Nombre producto", "total de producto",]];
+    const datosStocktable = datosStock.map((element,)  => (
+    [element.NOMBRE, element.TOTAL,]));    
+
+    var columncompra = [["compras", "mes ",]];
+    const datoscompra = datoscomprames.map((element,)  => (
+    [element.TOTAL_COMPRAS, element.MES,])); 
+ 
+    var columnestado = [["Estado Pago", "Cantidad", ]];
+    const datospago = datosestadopago.map((element,)  => (
+    [element.ESTADO_PAGO, element.CANTIDAD,])); 
+
+    var columndia = [["Estado Dias", "Total de compras", ]];
+    const datocompra = datoscomprapordia.map((element,)  => (
+    [element.DIA, element.TOTAL_COMPRAS,]));
+
+    var columntipoven = [["Tipo de venta", "Cantidad", ]];
+    const datostipoven = datosventa.map((element,)  => (
+    [element.TIPO_VENTA, element.CANTIDAD,]));  
+    // info.push([ ...element])});      
+      // 1 - x 200  /////  2- y
+
+      doc.setFontSize(50);
+      doc.addImage(maipo, 'PNG', 0, 0,100,0, undefined, false);
+      doc.text(`Reporte General`,80, 50);
+   
+      doc.autoTable({
+        theme: 'striped',
+           columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+           margin: { top: 75  },
+           head: columntipoven,
+           body: datostipoven
+        
+          } );
+
+          doc.autoTable({
+            theme: 'striped',
+               columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+               margin: { top: 20  },
+               head: columnestado,
+               body: datospago
+            
+              } );
+
+          doc.autoTable({
+            theme: 'striped',
+               columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+               margin: { top: 30  },
+               head: columndia,
+               body: datocompra
+            
+              } );
+
+                doc.autoTable({
+                  theme: 'striped',
+                     columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+                     margin: { top: 40  },
+                     head: columncompra,
+                     body: datoscompra
+                    } );
+
+          doc.autoTable({
+            theme: 'striped',
+               columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+               margin: { top: 50  },
+               head: columnstock,
+               body: datosStocktable
+            
+              } );
+             
+
+       
+      doc.save('Reporte de venta');
+    }
 
  
 
 
     return (
+
+      
       <Box justifyContent={'center'} textAlign={'center'} >
+        <button onClick={generarReporte} className='px-4 py-2 bg-blue-500 text-white mt-2'>Generar PDF</button>
         <Typography variant='h3' sx={{marginBottom: 5}}>Ventas</Typography>
         <Grilla container spacing={3}>
           <Grid xs="auto">
@@ -72,6 +158,7 @@ function Ventas() {
           </Grid>
         </Grilla>
       </Box>
+     
     )
 }
 
