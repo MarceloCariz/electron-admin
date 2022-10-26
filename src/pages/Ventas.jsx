@@ -7,6 +7,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 //Librerias
 import jsPDF from 'jspdf';
 import autotable from 'autotable';
+import autoTable from 'jspdf-autotable';
 import maipo from '../pages/img/maipo.PNG';
 //Graficos
 import PieChart_TipoVenta from '../components/Charts/PieChart_TipoVenta';
@@ -50,9 +51,9 @@ function Ventas() {
     const datosStocktable = datosStock.map((element,)  => (
     [element.NOMBRE, element.TOTAL,]));    
 
-    var columncompra = [["compras", "mes ",]];
+    var columncompra = [["Mes", "Compras",]];
     const datoscompra = datoscomprames.map((element,)  => (
-    [element.TOTAL_COMPRAS, element.MES,])); 
+    [element.MES, element.TOTAL_COMPRAS,])); 
  
     var columnestado = [["Estado Pago", "Cantidad", ]];
     const datospago = datosestadopago.map((element,)  => (
