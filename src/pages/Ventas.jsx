@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
-
+import { faUserPlus, faBookBookmark} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from '@mui/material';
 //Librerias
 import jsPDF from 'jspdf';
 import autotable from 'autotable';
@@ -129,7 +131,10 @@ function Ventas() {
 
       
       <Box justifyContent={'center'} textAlign={'center'} >
-        <button onClick={generarReporte} className='px-4 py-2 bg-blue-500 text-white mt-2'>Generar PDF</button>
+       <Boton onClick={generarReporte} variant='contained'>
+          <FontAwesomeIcon icon={faBookBookmark}/>
+DESCARGAR REPORTE       
+ </Boton>
         <Typography variant='h3' sx={{marginBottom: 5}}>Ventas</Typography>
         <Grilla container spacing={3}>
           <Grid xs="auto">
@@ -175,6 +180,11 @@ const Grilla = styled(Grid)`
   padding-left: 1rem;
   align-content: flex-start;
 `;
-
+const Boton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  gap: 10px;
+  `;
 
 export default Ventas
