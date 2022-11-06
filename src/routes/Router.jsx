@@ -1,8 +1,7 @@
 import React from 'react'
-import { BrowserRouter, HashRouter, Route, Routes} from 'react-router-dom'
+import {  HashRouter, Route, Routes} from 'react-router-dom'
 import { AuthProvider } from '../context/AuthProvider'
 import AdminLayout from '../Layout/AdminLayout'
-import Inicio from '../pages/Inicio'
 import Login from '../pages/Login'
 import Productores from '../pages/Productores'
 import Transportistas from '../pages/Transportistas'
@@ -12,12 +11,14 @@ import Ventas from '../pages/Ventas'
 import Subastas from '../pages/Subastas'
 import { Activos } from '../pages/contratos/Activos'
 import { Vencidos } from '../pages/contratos/Vencidos'
+import { ConsultasProvider } from '../context/ConsultasProvider'
 
 
 const Router = () => {  
   return (
     <HashRouter>
     <AuthProvider>
+      <ConsultasProvider>
         <Routes>
           {/* Ruta publica */}
             <Route path='/'>
@@ -25,7 +26,7 @@ const Router = () => {
             </Route>
           {/* Ruta Protegida */}
             <Route path='/inicio' element={<AdminLayout/>}>
-               <Route index element={<Inicio/>}/>
+               <Route index element={<Ventas/>}/>
                <Route path='productores' element={<Productores/>}/>
                <Route path='transportistas' element={<Transportistas/>}/>
                <Route path='clientes' element={<Clientes/>}/>
@@ -36,6 +37,7 @@ const Router = () => {
                <Route path='contratos/vencidos' element={<Vencidos/>}/>
             </Route>
         </Routes>
+      </ConsultasProvider>
     </AuthProvider>
     </HashRouter>
   )

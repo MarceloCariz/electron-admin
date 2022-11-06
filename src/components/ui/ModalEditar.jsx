@@ -24,7 +24,7 @@ const ModalEditar = ({open, handleClose, handleEditar, onChange, nombre, correo,
       Complete todos los campos
       </Typography>
       {error && <Alert   variant="filled" severity='error' style={{marginTop: '20px'}}>{error}</Alert>}
-      <FormContainer   autoComplete="off"  component="form" action="" onSubmit={handleEditar} validate="true">
+      <FormContainer   autoComplete="off"  component="form"  onSubmit={handleEditar} validate="true">
           <TextField margin="dense" variant="filled" label="Nombre"  name='nombre' onChange={onChange} type="text" value={nombre}  />
           <TextField margin="dense" variant="filled" label="Correo" name='correo' onChange={onChange} type="text" value={correo} />
 

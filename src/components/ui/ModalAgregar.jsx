@@ -12,7 +12,7 @@ const style = {
     p: 4,
   };
 const ModalAgregar = ({open, handleClose, handleAgregar, onChange, nombre, correo, password, error}) => {
-  console.log(error)
+  // console.log(error)
   return (
     <Modal
     open={open}
@@ -30,7 +30,6 @@ const ModalAgregar = ({open, handleClose, handleAgregar, onChange, nombre, corre
               <TextField margin="dense" variant="filled" label="Nombre"  name='nombre'    onChange={onChange}  type="text" value={nombre}  />
               <TextField margin="dense" variant="filled" label="Correo" name='correo' onChange={onChange} type="text" value={correo} />
               <TextField  margin="dense" variant="filled" label="Contraseña"  name='password' onChange={onChange} type="text" value={password} />
-
               <Button variant='contained' color="success" type='submit'>Agregar</Button>
           </FormContainer>
       </div>

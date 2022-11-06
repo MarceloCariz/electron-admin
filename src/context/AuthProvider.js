@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
         const autenticarAdmin = async () => {
             const token = localStorage.getItem('token')
             if(!token){
-                console.log("el token es: "+ token)
+                // console.log("el token es: "+ token)
                 setCargando(false)
                 return
             }            
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
                 if(pathname === '/'){
 
                     if(auth.ID_ROL === 2){
-                        console.log("el token es: "+ token)
+                        // console.log("el token es: "+ token)
                         navigate('/inicio')
                         return
                     }

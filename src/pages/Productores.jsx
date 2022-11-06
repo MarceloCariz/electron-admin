@@ -3,15 +3,16 @@ import { faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import { agregarProductor, obtenerProductores, editarProductores, borrarProductores } from '../helpers/getAdmin';
+import { agregarProductor,  editarProductores, borrarProductores } from '../helpers/getAdmin';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import ModalAgregar from '../components/ui/ModalAgregar';
 import ModalEditar from '../components/ui/ModalEditar';
+import useConsultas from '../hooks/useConsultas';
 
 const Productores = () => {
-    const [productores, setProductores] = useState([]);
+    // const [productores, setProductores] = useState([]);
     const [alerta, setAlerta] = useState("")
     const [formValues, setFormValues] = useState({nombre: '', correo: '', id: 0, password: ''});
     const {nombre, correo, password } = formValues;
@@ -19,8 +20,20 @@ const Productores = () => {
     const [openAgregar, setOpenAgregar] = useState(false);
     const [openEditar, setOpenEditar] = useState(false);
     const navigate = useNavigate();
-      
-  // FUNCIONES CERRAR MODAL EDITAR
+    /// useconsultas
+    const {cargarProductores, productores} = useConsultas();
+
+
+    useEffect(() => {
+
+      if (localStorage.getItem("token") === "" ) {
+            navigate('/')
+      }
+      cargarProductores();
+  },[navigate] )
+
+
+// FUNCIONES CERRAR MODAL EDITAR
 const handleOpenEditar = (e) => {
   setOpenEditar(true);
     setFormValues({ nombre: e.NOMBRE, correo: e.CORREO, id: e.ID || '' });
@@ -38,19 +51,7 @@ const handleCloseEditar = () => {
     setFormValues({ nombre: '', correo: '', id:  '' ,password: ''});
     setOpenAgregar(false)
   };
-useEffect(() => {
 
-    if (localStorage.getItem("token") === "" ) {
-          navigate('/')
-        }
-        const cargarProductores = async()=>{
-          const respuesta = await obtenerProductores();
-          console.log(respuesta)
-          setProductores(respuesta);
-     }
-  
-    cargarProductores();
-},[] )
             
 
 const onChange = ({ target }) => {
@@ -69,9 +70,10 @@ const  handleAgregar = async(e) =>{
     }, 3000);
     return;
   }
-  const respuesta = await agregarProductor(formValues);
+  await agregarProductor(formValues);
 
-  window.location.reload();
+  cargarProductores();
+  handleCloseAgregar();
 
 }
 
@@ -84,13 +86,16 @@ const handleEditarProductor = async(e) =>{
       }, 2000);
       return;
     }
-    const respuesta = await editarProductores(formValues);
-    window.location.reload();
+    await editarProductores(formValues);
+    cargarProductores();
+    handleCloseEditar();
+
 }
 
 const RemoveProductor = async(e)=>{
     await borrarProductores(e)
-    window.location.reload();
+    cargarProductores();
+
 }
 
 const columns =[

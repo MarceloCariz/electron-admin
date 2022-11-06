@@ -3,12 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
-import { faUserPlus, faBookBookmark} from '@fortawesome/free-solid-svg-icons';
+import { faBookBookmark} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@mui/material';
 //Librerias
 import jsPDF from 'jspdf';
-import autotable from 'autotable';
 import autoTable from 'jspdf-autotable';
 import maipo from '../pages/img/maipo.PNG';
 //Graficos
@@ -131,11 +130,12 @@ function Ventas() {
 
       
       <Box justifyContent={'center'} textAlign={'center'} >
-       <Boton onClick={generarReporte} variant='contained'>
+
+        <Typography variant='h3' sx={{marginBottom: 1}}>Ventas</Typography>
+        <Boton sx={{marginBottom: 2}} onClick={generarReporte} variant='contained' >
           <FontAwesomeIcon icon={faBookBookmark}/>
-DESCARGAR REPORTE       
- </Boton>
-        <Typography variant='h3' sx={{marginBottom: 5}}>Ventas</Typography>
+          DESCARGAR REPORTE       
+        </Boton>
         <Grilla container spacing={3}>
           <Grid xs="auto">
             <Grafics>

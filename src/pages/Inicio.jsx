@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import grafico from './img/grafico.jpg'
@@ -6,7 +6,7 @@ const Inicio = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("token") == "" ) {
+    if (localStorage.getItem("token") === "" ) {
       navigate('/')
     }
   })

@@ -46,8 +46,7 @@ export const editarProductores = async(datos)=>{
 
 export const borrarProductores = async(clienteID)=>{
     try {
-        await clienteAxios.delete(`/admin/productor/eliminar/${ clienteID.toString() }`
-        ).then( res => console.log("Productores n° "+ clienteID + " borrado!"))
+        await clienteAxios.delete(`/admin/productor/eliminar/${ clienteID.toString() }`)
 
     } catch (error) {
         console.log("Error GetAdmins.jsx | Tipo: Del | Act: borrarProductores")
@@ -93,8 +92,7 @@ export const editarTransportistas = async(datos)=>{
 
 export const borrarTransportistas = async(clienteID)=>{
     try {
-        await clienteAxios.delete(`/admin/transportista/eliminar/${ clienteID.toString() }`
-        ).then( res => console.log("Transportistas n° "+ clienteID + " borrado!"))
+        await clienteAxios.delete(`/admin/transportista/eliminar/${ clienteID.toString() }`)
 
     } catch (error) {
         console.log("Error GetAdmins.jsx | Tipo: Del | Act: borrarTransportistas")
@@ -143,8 +141,7 @@ export const editarClientes = async(datos)=>{
 
 export const borrarClientes = async(clienteID)=>{
     try {
-        await clienteAxios.delete(`/admin/cliente/eliminar/${ clienteID.toString() }`
-        ).then( res => console.log("Cliente n° "+ clienteID + " borrado!"))
+        await clienteAxios.delete(`/admin/cliente/eliminar/${ clienteID.toString() }`)
 
     } catch (error) {
         console.log("Error GetAdmins.jsx | Tipo: Del | Act: borrarClientes")
@@ -174,10 +171,10 @@ export const obtenerEnvios = async() =>{
 
 export const activarSubasta = async(datos)=>{
     // const obj = {referencia_compra,fecha_activacion,activo: 'true'};
-    console.log(datos)
     try {
         const {data} = await clienteAxios.put('/admin/subasta/activar',datos);
         console.log(data)
+        return data;
     } catch (error) {
         console.log(error)
     }
@@ -186,7 +183,7 @@ export const activarSubasta = async(datos)=>{
 export const activarSubastaTransport = async(datos) =>{
     try {
         const {data} = await clienteAxios.put('/admin/subasta/transportista/activar', datos);
-        console.log(data)
+        return data;
     } catch (error) {
         console.log(error)
     }
@@ -217,7 +214,7 @@ export const obtenerContratos = async() =>{
 export const renovarContrato = async(contrato) =>{
     try {
         const {data} = await clienteAxios.put('/admin/productor/contrato/renovacion', contrato);
-        return         data.sort(sortBy('FECHA_TERMINO'));
+        return  data;
     } catch (error) {
         console.log(error)
     }

@@ -3,39 +3,35 @@ import { faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import { agregarClientes, obtenerClientes, editarClientes, borrarClientes} from '../helpers/getAdmin';
+import { agregarClientes, editarClientes, borrarClientes} from '../helpers/getAdmin';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import ModalAgregar from '../components/ui/ModalAgregar';
 import ModalEditar from '../components/ui/ModalEditar';
+import useConsultas from '../hooks/useConsultas';
 
 
 const Clientes = () => {
   // Datos
   const [alerta, setAlerta] = useState("")
   const [formValues, setFormValues] = useState({nombre: '', correo: '', id: 0, password: ''});
-  const [clientes, setClientes] = useState([]);
   //MODALES
   const [openAgregar, setOpenAgregar] = useState(false);
   const [openEditar, setOpenEditar] = useState(false);;
   //
+  const {cargarClientes, clientes} = useConsultas();
   const navigate = useNavigate();
   
   const {nombre, correo, password } = formValues
 
   useEffect(() => {
-      if (localStorage.getItem("token") == "" ) {
+      if (localStorage.getItem("token") === "" ) {
         navigate('/')
       }
-      const cargarClientes = async()=>{
-        const respuesta = await obtenerClientes();
-        console.log(respuesta)
-        setClientes(respuesta);
-      }
+
   
       cargarClientes();
-      console.log(clientes);
     },[] )
   
 
@@ -74,9 +70,9 @@ const Clientes = () => {
       }, 3000);
       return;
   }
-    const respuesta = await agregarClientes(formValues);
-    window.location.reload();
-  
+    await agregarClientes(formValues);
+    cargarClientes();
+    handleCloseAgregar();
   }
 
   const handleEditarCliente = async(e) =>{
@@ -88,18 +84,20 @@ const Clientes = () => {
       }, 2000);
       return;
     }
-    const respuesta = await editarClientes(formValues);
-    window.location.reload();
+    await editarClientes(formValues);
+    cargarClientes();
+    handleCloseEditar();
 }
 
 const RemoveCliente = async(e)=>{
   await borrarClientes(e)
-  window.location.reload();
+  cargarClientes();
 }
     
   const columns =[
     { field: 'NOMBRE', headerName: 'Nombre', flex:1, minWidth: 150 , renderCell: (params) => <p> {params.row.NOMBRE} </p>},
     { field: 'CORREO', headerName: 'Correo', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.CORREO}</>},
+    { field: 'RUT', headerName: 'Rut', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.RUT}</>},
     { field: 'acciones', headerName: 'Acciones', flex:1 , minWidth: 150 , renderCell: (params) => 
     <div style={{display:'flex', gap:'10px' , alignItems: 'center'}}>
       <Boton variant='contained'  onClick={(e) => handleOpenEditar(params.row,e)}>

@@ -30,13 +30,12 @@ export const Activos = () => {
                 contratos.map(({ID_CONTRATO,FECHA_INICIO,FECHA_TERMINO,SUELDO})=>(
                     <Grid item key={ID_CONTRATO}>
                         <ContenedorContrato elevation={6} >
-                                <p># {ID_CONTRATO}</p>
-                                <p>Fecha Inicio {new Date(FECHA_INICIO).toLocaleDateString()}</p>
-                                <p>Fecha Termino {new Date(FECHA_TERMINO).toLocaleDateString()}</p>
-                                <p>Sueldo: {Number(SUELDO).toLocaleString("es-CL", {style: "currency", currency:"CLP"})}</p>
+                                <P># {ID_CONTRATO}</P>
+                                <P>Fecha Inicio {new Date(FECHA_INICIO).toLocaleDateString()}</P>
+                                <P>Fecha Termino {new Date(FECHA_TERMINO).toLocaleDateString()}</P>
+                                <P>Sueldo: {Number(SUELDO).toLocaleString("es-CL", {style: "currency", currency:"CLP"})}</P>
                         </ContenedorContrato>
                     </Grid>
-
                 ))
             )}
       </Grid>
@@ -45,6 +44,10 @@ export const Activos = () => {
   );
 };
 
+
+const P = styled.p`
+    font-weight: 800;
+`
 
 
 const ContenedorContrato = styled(Paper)`

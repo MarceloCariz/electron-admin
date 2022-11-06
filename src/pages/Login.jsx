@@ -1,7 +1,6 @@
-import { useState , useContext} from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import AuthContext from "../context/AuthProvider";
 import { login } from "../helpers/getAdmin";
 import useAuth from "../hooks/useAuth";
 import fondo from './img/fondo.jpg';

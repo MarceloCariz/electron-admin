@@ -3,23 +3,24 @@ import { faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import { agregarTransportistas, borrarTransportistas, editarTransportistas, obtenerTransportistas } from '../helpers/getAdmin';
+import { agregarTransportistas, borrarTransportistas, editarTransportistas} from '../helpers/getAdmin';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import ModalAgregar from '../components/ui/ModalAgregar';
 import ModalEditar from '../components/ui/ModalEditar';
+import useConsultas from '../hooks/useConsultas';
 
 
 const Transportistas = () => {
   //DATOS
   const [alerta, setAlerta] = useState("")
   const [formValues, setFormValues] = useState({nombre: '', correo: '', id: 0, password: ''});
-  const [transportistas, setTransportistas] = useState([])
   ///MODALES
   const [openAgregar, setOpenAgregar] = useState(false);
   const [openEditar, setOpenEditar] = useState(false);
   //const [open, setOpen] = useState(false);
+  const {cargartransportistas, transportistas} = useConsultas();
   const navigate = useNavigate();
 
   const {nombre, correo, password } = formValues;
@@ -28,14 +29,9 @@ const Transportistas = () => {
     if (localStorage.getItem("token") === "" || localStorage.getItem("token") === "undefined" ) {
       navigate("/");
     }
-    const cargartransportistas = async () => {
-      const respuesta = await obtenerTransportistas();
-      console.log(respuesta);
-      setTransportistas(respuesta);
-    };
+
 
     cargartransportistas();
-    console.log(transportistas);
   }, []);
   
     
@@ -78,8 +74,9 @@ const  handleAgregar = async(e) =>{
     }, 3000);
     return;
   }
-  const respuesta = await agregarTransportistas(formValues);
-  window.location.reload();
+  await agregarTransportistas(formValues);
+  cargartransportistas();
+  handleCloseAgregar();
 
 }
 
@@ -92,13 +89,14 @@ const handleEditarTransport = async(e) =>{
       }, 2000);
       return;
     }
-    const respuesta = await editarTransportistas(formValues);
-    window.location.reload();
+    await editarTransportistas(formValues);
+    cargartransportistas();
+    handleCloseEditar();
 }
 
 const RemoveTransportista = async(e)=>{
     await borrarTransportistas(e)
-    window.location.reload();
+    cargartransportistas();
 }
 
 const columns =[

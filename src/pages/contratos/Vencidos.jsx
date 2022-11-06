@@ -1,21 +1,17 @@
-import { Box, Button, Grid, InputLabel, MenuItem, Paper, Select, CircularProgress, Typography } from "@mui/material";
+import { Box, Button, Grid, InputLabel, MenuItem, Paper, Select, CircularProgress, Typography, Alert } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { obtenerContratos, renovarContrato } from "../../helpers/getAdmin";
+import {  renovarContrato } from "../../helpers/getAdmin";
+import useConsultas from "../../hooks/useConsultas";
 
 export const Vencidos = () => {
-    const [contratos, setContratos] = useState([])
-    const [cargando, setCargando] = useState(false);
-    const [tiempo, setTiempo] = useState({mes: 1, id: 0 })
+    const [mensaje, setMensaje] = useState({error: false, msg:''});
 
+    const [tiempo, setTiempo] = useState({mes: 0, id: 0 })
+
+    const {cargarContratos, cargando, contratos} = useConsultas();
     useEffect(() => {
-        const cargarContratos = async () =>{
-            setCargando(true)
-            const respuesta = await obtenerContratos();
-            const activos = respuesta.filter(({RENOVACION})=>(RENOVACION === 'true'));
-            setContratos(activos);
-            setCargando(false)
-        }
+
 
         cargarContratos();
     }, []);
@@ -26,6 +22,7 @@ export const Vencidos = () => {
     }
 
     const handleRenovarContrato = async() =>{
+        if(tiempo.mes === 0) return setMensaje({error: true, msg:"Seleccione un tiempo valido"});
         const fechaActual = new Date(Date.now())
         const contratoInfo = {
             id_contrato: tiempo.id,
@@ -34,8 +31,11 @@ export const Vencidos = () => {
         }
 
         const respuesta = await renovarContrato(contratoInfo);
-        window.location.reload();
         console.log(respuesta)
+        setMensaje({error: false, mensaje: respuesta});
+        setTimeout(() => {
+            cargarContratos();     
+        }, 2000);
     }
 
 
@@ -51,6 +51,7 @@ export const Vencidos = () => {
             (
                 contratos.map(({ID_CONTRATO,FECHA_INICIO,FECHA_TERMINO,SUELDO})=>(
                     <Grid item key={ID_CONTRATO} >
+                        {mensaje.msg && <Alert variant="filled" color={mensaje.error ? "error" : "success"}>{mensaje.msg}</Alert>}
                         <ContenedorContrato elevation={6} >
                                 <p># {ID_CONTRATO}</p>
                                 <p>Fecha Inicio {new Date(FECHA_INICIO).toLocaleDateString()}</p>
