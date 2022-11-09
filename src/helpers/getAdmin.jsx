@@ -105,10 +105,12 @@ export const borrarTransportistas = async(clienteID)=>{
 // <--------------------------- clientes --------------------------->
 
 export const agregarClientes = async(clientes) =>{
- 
-    const {data} = await clienteAxios.post('/clientes/nuevo', clientes);
-    return data
-
+    try {
+        const {data} = await clienteAxios.post('/clientes/nuevo', clientes);
+        return data
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 export const obtenerClientes = async()=>{

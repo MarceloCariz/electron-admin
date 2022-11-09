@@ -130,7 +130,7 @@ const columns =[
             rows={transportistas}
             getRowId={(row)=>row.ID}
             columns={columns}
-            pageSize={5}
+            pageSize={10}
             autoHeight={true}
             autoPageSize={true}
             

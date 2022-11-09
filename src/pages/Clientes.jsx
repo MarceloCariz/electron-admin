@@ -15,7 +15,7 @@ import useConsultas from '../hooks/useConsultas';
 const Clientes = () => {
   // Datos
   const [alerta, setAlerta] = useState("")
-  const [formValues, setFormValues] = useState({nombre: '', correo: '', id: 0, password: ''});
+  const [formValues, setFormValues] = useState({nombre: '', correo: '', id: 0, password: '', tipo: 'local', rut:''});
   //MODALES
   const [openAgregar, setOpenAgregar] = useState(false);
   const [openEditar, setOpenEditar] = useState(false);;
@@ -23,7 +23,7 @@ const Clientes = () => {
   const {cargarClientes, clientes} = useConsultas();
   const navigate = useNavigate();
   
-  const {nombre, correo, password } = formValues
+  const {nombre, correo, password, rut, tipo } = formValues
 
   useEffect(() => {
       if (localStorage.getItem("token") === "" ) {
@@ -42,7 +42,7 @@ const Clientes = () => {
       setFormValues({ nombre: e.NOMBRE, correo: e.CORREO, id: e.ID || '' });
   };
   const handleCloseEditar = () => {
-    setFormValues({ nombre: '', correo: '', id:  ''  ,password: ''});
+    setFormValues({ nombre: '', correo: '', id:  ''  ,password: '', tipo: 'local', rut:''});
     setOpenEditar(false)
   };
   // FUNCIONES CERRAR MODAL AGREGAR
@@ -50,7 +50,7 @@ const Clientes = () => {
     setOpenAgregar(true);
   };
   const handleCloseAgregar = () => {
-    setFormValues({ nombre: '', correo: '', id:  '' ,password: ''});
+    setFormValues({ nombre: '', correo: '', id:  '' ,password: '',  tipo: 'local',rut:''});
     setOpenAgregar(false)
   };
 
@@ -61,19 +61,38 @@ const Clientes = () => {
     });
   }
 
+  const handleChangeTipoCliente = ({target}) =>{
+    // console.log(target.value)
+    if(target.value === "externo") return setFormValues({...formValues, tipo: target.value, rut: ""})
+    setFormValues({...formValues, tipo: target.value});
+  
+  }
+
   const  handleAgregar = async(e) =>{
     e.preventDefault();
-    if ([correo, nombre, password].includes('')) {
+
+    if(tipo === "local" && rut === ""){
+      setAlerta('El rut es obligatorio para el cliente local')
+      setTimeout(() => {
+        setAlerta('');
+      }, 3000);
+      return;
+    }
+    if ([correo, nombre, password,  tipo ].includes('')) {
       setAlerta('Todos los campos son obligatorios')
       setTimeout(() => {
         setAlerta('');
       }, 3000);
       return;
-  }
+    }
+    // console.log(formValues);
+    // return;
     await agregarClientes(formValues);
     cargarClientes();
     handleCloseAgregar();
   }
+
+
 
   const handleEditarCliente = async(e) =>{
     e.preventDefault();
@@ -118,14 +137,16 @@ const RemoveCliente = async(e)=>{
           <FontAwesomeIcon icon={faUserPlus}/>
           Agregar Cliente
         </Boton>
-        <ModalAgregar error={alerta}  open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
+        <ModalAgregar handleChangeTipoCliente={handleChangeTipoCliente} usuario="cliente" tipoCliente={tipo} rut={formValues.rut}
+        error={alerta}  open={openAgregar} handleClose={handleCloseAgregar} 
+        handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
         {/* -------------------FORM------------------------ */}
         <DataGrid
             style={{  width: '70vw' , backgroundColor: 'white'}}
             rows={clientes}
             getRowId={(row)=>row.ID}
             columns={columns}
-            pageSize={5}
+            pageSize={8}
             autoHeight={true}
             autoPageSize={true}
             
