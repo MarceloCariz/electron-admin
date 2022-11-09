@@ -24,7 +24,6 @@ const Clientes = () => {
   const navigate = useNavigate();
   
   const {nombre, correo, password, rut, tipo } = formValues
-
   useEffect(() => {
       if (localStorage.getItem("token") === "" ) {
         navigate('/')
@@ -117,6 +116,7 @@ const RemoveCliente = async(e)=>{
     { field: 'NOMBRE', headerName: 'Nombre', flex:1, minWidth: 150 , renderCell: (params) => <p> {params.row.NOMBRE} </p>},
     { field: 'CORREO', headerName: 'Correo', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.CORREO}</>},
     { field: 'RUT', headerName: 'Rut', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.RUT}</>},
+    { field: 'TIPO_CLIENTE', headerName: 'Tipo', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.TIPO_CLIENTE}</>},
     { field: 'acciones', headerName: 'Acciones', flex:1 , minWidth: 150 , renderCell: (params) => 
     <div style={{display:'flex', gap:'10px' , alignItems: 'center'}}>
       <Boton variant='contained'  onClick={(e) => handleOpenEditar(params.row,e)}>

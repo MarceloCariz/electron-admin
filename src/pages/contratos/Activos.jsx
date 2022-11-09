@@ -1,19 +1,18 @@
 import { Box, CircularProgress, Grid, Paper, Typography } from "@mui/material"; 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { obtenerContratos } from "../../helpers/getAdmin";
+import useConsultas from "../../hooks/useConsultas";
 
 export const Activos = () => {
-    const [contratos, setContratos] = useState([])
-    const [cargando, setCargando] = useState(false)
+
+    const {cargarContratos, cargando, contratos} = useConsultas();
+
+    const mostrarGanancias = () =>{
+        const total = contratos.reduce((total, a)=>( Number(a.SUELDO) + total),0);
+        return total.toLocaleString("es-CL", {style: "currency", currency:"CLP"});
+    }
     useEffect(() => {
-        const cargarContratos = async () =>{
-            setCargando(true)
-            const respuesta = await obtenerContratos();
-            const activos = respuesta.filter(({ESTADO})=>(ESTADO === 'TRUE'));
-            setContratos(activos);
-            setCargando(false)
-        }
 
         cargarContratos();
     }, [])
@@ -21,6 +20,9 @@ export const Activos = () => {
   return (
     <Container>
       <Typography variant="h4" >Contratos Activos</Typography>
+        <Typography variant="h3">Ganancias Totales: 
+            {mostrarGanancias()}
+        </Typography>
         {cargando && contratos.length === 0 && 
             <CircularProgress color="inherit"/>
         }

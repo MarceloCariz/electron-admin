@@ -9,7 +9,7 @@ export const Vencidos = () => {
 
     const [tiempo, setTiempo] = useState({mes: 0, id: 0 })
 
-    const {cargarContratos, cargando, contratos} = useConsultas();
+    const {cargarContratos, cargando, contratosActivos:contratos} = useConsultas();
     useEffect(() => {
 
 

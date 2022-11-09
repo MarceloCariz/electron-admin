@@ -19,6 +19,7 @@ const ConsultasProvider = ({children}) => {
     const [transportistas, setTransportistas] = useState([]);
     const [pedidos, setPedidos] = useState([]);
     const [contratos, setContratos] = useState([]);
+    const [contratosActivos, setContratosActivos] = useState([]);
     const cargarProductores = async()=>{
         const respuesta = await obtenerProductores();
         setProductores(respuesta);
@@ -46,8 +47,10 @@ const ConsultasProvider = ({children}) => {
     const cargarContratos = async () =>{
         setCargando(true)
         const respuesta = await obtenerContratos();
+        setContratos(respuesta);
         const activos = respuesta.filter(({RENOVACION})=>(RENOVACION === 'true'));
-        setContratos(activos);
+        setContratosActivos(activos);
+
         setCargando(false)
     }
     return (
@@ -56,7 +59,7 @@ const ConsultasProvider = ({children}) => {
             cargarClientes, clientes,
             cargartransportistas, transportistas,
             cargarPedidos,  pedidos,                        //// subasta disponibles
-            cargarContratos, contratos,
+            cargarContratos, contratos, contratosActivos,
             cargando,                               /// UI
             }}>
             {children}
