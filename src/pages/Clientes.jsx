@@ -9,7 +9,7 @@ import { Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import ModalAgregar from '../components/ui/ModalAgregar';
 import ModalEditar from '../components/ui/ModalEditar';
-import useConsultas from '../hooks/useConsultas';
+import useConsultas from '../hooks/useConsultas'; 
 
 
 const Clientes = () => {
