@@ -21,12 +21,12 @@ function PieChart_TipoVenta({ tipoVenta }) {
         label: 'EXAMPLE TITLE',
         data: DataS,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.9)',
+          'rgba(54, 162, 235, 0.9)',
+          'rgba(255, 206, 86, 0.9)',
+          'rgba(75, 192, 192, 0.9)',
+          'rgba(153, 102, 255, 0.9)',
+          'rgba(255, 159, 64, 0.9)',
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',

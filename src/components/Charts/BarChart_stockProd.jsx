@@ -21,7 +21,7 @@ function BarChart_stockProd({stockProductosNombre}) {
       {
         label: 'Stock de productos',
         data: DataS,
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        backgroundColor: 'rgba(255, 99, 132, 0.9)',
       }
     ],
   };
