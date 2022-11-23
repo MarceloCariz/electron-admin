@@ -38,7 +38,146 @@ function Ventas() {
 
     cargarOrdCompra();
   })
+  const  Tipocliente = async() =>{
+    const fecha =new Date().toLocaleDateString();
+    const doc = new jsPDF('p','mm','a4' );
+    const datosventa = OrdCompra.tipoVenta
 
+    var columntipoven = [["Tipo de venta", "Cantidad", ]];
+    const datostipoven = datosventa.map((element,)  => (
+    [element.TIPO_VENTA, element.CANTIDAD,]));    
+
+  
+      // 1 - x 200  /////  2- y
+      doc.addImage(maipo, 'PNG', 0, 0,50,0, undefined, false);
+      doc.text(`Fecha de creacion: ${fecha}`, 130, 7).setFontSize(25);
+      doc.setFontSize(30);
+      doc.text(`Tipo de venta`,60, 65).setFontSize(10);
+    
+      doc.autoTable({
+        theme: 'striped',
+           columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+           margin: { top: 75  },
+           head: columntipoven,
+           body: datostipoven
+        
+          } );
+
+      doc.save(`Tipo de ventas ${fecha}`);
+    }
+
+  const  Comprapormes = async() =>{
+    const fecha =new Date().toLocaleDateString();
+    const doc = new jsPDF('p','mm','a4' );
+    const datoscomprames = OrdCompra.comprasPorMes
+
+    var columncompra = [["compras", "mes ",]];
+    const datoscompra = datoscomprames.map((element,)  => (
+    [element.TOTAL_COMPRAS, element.MES,]));  
+
+  
+      // 1 - x 200  /////  2- y
+      doc.addImage(maipo, 'PNG', 0, 0,50,0, undefined, false);
+      doc.text(`Fecha de creacion: ${fecha}`, 130, 7).setFontSize(25);
+      doc.setFontSize(30);
+      doc.text(`Compra hecha por mes`,50, 65).setFontSize(10);
+    
+      doc.autoTable({
+        theme: 'striped',
+           columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+           margin: { top: 80  },
+           head: columncompra,
+           body: datoscompra
+          } );
+
+      doc.save(`Compra por mes${fecha}`);
+    }
+
+  const  Estadopago = async() =>{
+    const fecha =new Date().toLocaleDateString();
+    const doc = new jsPDF('p','mm','a4' );
+    const datosestadopago = OrdCompra.estadoPago
+
+    var columnestado = [["Estado Pago", "Cantidad", ]];
+    const datospago = datosestadopago.map((element,)  => (
+    [element.ESTADO_PAGO, element.CANTIDAD,])); 
+
+
+  
+      // 1 - x 200  /////  2- y
+      doc.addImage(maipo, 'PNG', 0, 0,50,0, undefined, false);
+      doc.text(`Fecha de creacion: ${fecha}`, 130, 7).setFontSize(25);
+      doc.setFontSize(30);
+      doc.text(`Estado de pedidos`,50, 65).setFontSize(10);
+    
+      doc.autoTable({
+        theme: 'striped',
+           columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+           margin: { top: 70  },
+           head: columnestado,
+           body: datospago
+        
+          } );
+
+      doc.save(`Estado de pedidos${fecha}`);
+    }
+
+
+
+ const  pdfdatosstock = async() =>{
+    const fecha =new Date().toLocaleDateString();
+    const doc = new jsPDF('p','mm','a4' );
+    const datosStock = OrdCompra.stockProductosNombre
+ 
+    var columnstock = [["Nombre producto", "total de producto",]];
+    const datosStocktable = datosStock.map((element,)  => (
+    [element.NOMBRE, element.TOTAL,]));    
+
+
+      // 1 - x 200  /////  2- y
+      doc.addImage(maipo, 'PNG', 0, 0,50,0, undefined, false);
+      doc.text(`Fecha de creacion: ${fecha}`, 130, 7).setFontSize(25);
+      doc.setFontSize(30);
+      doc.text(`Stock Disponible`,55, 45).setFontSize(10);
+    
+   
+      doc.autoTable({
+        theme: 'striped',
+           columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+           margin: { top: 50  },
+           head: columnstock,
+           body: datosStocktable
+          } );
+      doc.save(`Venta de productos ${fecha}`);
+    }
+
+ const  Comprapordia = async() =>{
+      const fecha =new Date().toLocaleDateString();
+      const doc = new jsPDF('p','mm','a4' );
+      const datoscomprapordia = OrdCompra.comprasPorDia
+      var columndia = [["Estado Dias", "Total de compras", ]];
+    const datocompra = datoscomprapordia.map((element,)  => (
+    [element.DIA, element.TOTAL_COMPRAS,]));
+
+  
+    
+        // 1 - x 200  /////  2- y
+        doc.addImage(maipo, 'PNG', 0, 0,50,0, undefined, false);
+        doc.text(`Fecha de creacion: ${fecha}`, 130, 7).setFontSize(25);
+        doc.setFontSize(30);
+        doc.text(`Compras por dias`,50, 65).setFontSize(10);
+      
+        doc.autoTable({
+          theme: 'striped',
+             columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+             margin: { top: 80  },
+             head: columndia,
+             body: datocompra
+          
+            } );
+  
+        doc.save(`Compras por dias${fecha}`); 
+      }
 
   const  generarReporte = () =>{
     const doc = new jsPDF('p','mm','a3' );
@@ -141,26 +280,46 @@ function Ventas() {
             <Grafics>
               <DoughnutChart_TipoPago estadoPago={OrdCompra.estadoPago} />
             </Grafics>
+            <Boton sx={{marginBottom: 2}} onClick={Estadopago} variant='contained' >
+          <FontAwesomeIcon icon={faBookBookmark}/>
+          DESCARGAR REPORTE       
+        </Boton>
           </Grid>
           <Grid xs="auto">
             <Grafics>
               <PieChart_TipoVenta tipoVenta={OrdCompra.tipoVenta}/>
             </Grafics>
+            <Boton sx={{marginBottom: 2}} onClick={Tipocliente} variant='contained' >
+          <FontAwesomeIcon icon={faBookBookmark}/>
+          DESCARGAR REPORTE       
+        </Boton>
           </Grid>
           <Grid xs="auto">
             <Grafics >
               <LineChart_CompraXdia comprasPorDia={OrdCompra.comprasPorDia}/>
             </Grafics>
+            <Boton sx={{marginBottom: 2}} onClick={Comprapordia} variant='contained' >
+          <FontAwesomeIcon icon={faBookBookmark}/>
+          DESCARGAR REPORTE       
+        </Boton>
           </Grid>
           <Grid xs="auto">
             <Grafics >
               <BarChart_stockProd stockProductosNombre={OrdCompra.stockProductosNombre}/>
             </Grafics>
+            <Boton sx={{marginBottom: 2}} onClick={pdfdatosstock} variant='contained' >
+          <FontAwesomeIcon icon={faBookBookmark}/>
+          DESCARGAR REPORTE       
+        </Boton>
           </Grid>
           <Grid xs="auto">
             <Grafics>
               <LineChart_CompraXmes comprasPorMes={OrdCompra.comprasPorMes}/>
             </Grafics>
+            <Boton sx={{marginBottom: 2}} onClick={Comprapormes} variant='contained' >
+          <FontAwesomeIcon icon={faBookBookmark}/>
+          DESCARGAR REPORTE       
+        </Boton>
           </Grid>
         </Grilla>
       </Box>
