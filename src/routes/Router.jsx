@@ -12,6 +12,7 @@ import Subastas from '../pages/Subastas'
 import { Activos } from '../pages/contratos/Activos'
 import { Vencidos } from '../pages/contratos/Vencidos'
 import { ConsultasProvider } from '../context/ConsultasProvider'
+import { Informes } from '../pages/Informes'
 
 
 const Router = () => {  
@@ -35,6 +36,7 @@ const Router = () => {
                <Route path='subastas' element={<Subastas/>}/>
                <Route path='contratos/activos' element={<Activos/>}/>
                <Route path='contratos/vencidos' element={<Vencidos/>}/>
+               <Route path='informes'  element={<Informes/>} />
             </Route>
         </Routes>
       </ConsultasProvider>

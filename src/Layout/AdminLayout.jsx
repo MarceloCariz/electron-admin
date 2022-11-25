@@ -58,7 +58,7 @@ const AdminLayout = () => {
                         Graficas</Tituloopcion>
                     <ContainerOpciones>
                         <SubtituloOpcion to={'ventas'}>Ventas</SubtituloOpcion>
-                        <SubtituloOpcion to={''}>Informes</SubtituloOpcion>
+                        <SubtituloOpcion to={'informes'}>Informes</SubtituloOpcion>
                     </ContainerOpciones>
                 </div>
                 <div>

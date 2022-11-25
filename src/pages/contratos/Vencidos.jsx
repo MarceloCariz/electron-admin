@@ -32,7 +32,7 @@ export const Vencidos = () => {
 
         const respuesta = await renovarContrato(contratoInfo);
         console.log(respuesta)
-        setMensaje({error: false, mensaje: respuesta});
+        setMensaje({error: false, msg: respuesta});
         setTimeout(() => {
             cargarContratos();     
         }, 2000);

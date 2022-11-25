@@ -18,7 +18,7 @@ import BarChart_stockProd from '../components/Charts/BarChart_stockProd';
 import LineChart_CompraXmes from '../components/Charts/LineChart_CompraXmes';
 
 //sandbox Import
-import { obtenerOrdCompra } from '../helpers/getAdmin'
+import { generarReportes, obtenerOrdCompra } from '../helpers/getAdmin'
 import { Box, Typography } from '@mui/material';
 
 
@@ -39,6 +39,8 @@ function Ventas() {
     cargarOrdCompra();
   })
   const  Tipocliente = async() =>{
+    await generarReportes({tipoVenta:OrdCompra.tipoVenta})
+
     const fecha =new Date().toLocaleDateString();
     const doc = new jsPDF('p','mm','a4' );
     const datosventa = OrdCompra.tipoVenta
@@ -67,6 +69,7 @@ function Ventas() {
     }
 
   const  Comprapormes = async() =>{
+    await generarReportes({comprasPorMes:OrdCompra.comprasPorMes})
     const fecha =new Date().toLocaleDateString();
     const doc = new jsPDF('p','mm','a4' );
     const datoscomprames = OrdCompra.comprasPorMes
@@ -94,6 +97,8 @@ function Ventas() {
     }
 
   const  Estadopago = async() =>{
+    await generarReportes({estadoPago:OrdCompra.estadoPago})
+
     const fecha =new Date().toLocaleDateString();
     const doc = new jsPDF('p','mm','a4' );
     const datosestadopago = OrdCompra.estadoPago
@@ -125,6 +130,8 @@ function Ventas() {
 
 
  const  pdfdatosstock = async() =>{
+    await generarReportes({stockProductosNombre:OrdCompra.stockProductosNombre})
+
     const fecha =new Date().toLocaleDateString();
     const doc = new jsPDF('p','mm','a4' );
     const datosStock = OrdCompra.stockProductosNombre
@@ -152,6 +159,7 @@ function Ventas() {
     }
 
  const  Comprapordia = async() =>{
+      await generarReportes({comprasPorDia:OrdCompra.comprasPorDia})
       const fecha =new Date().toLocaleDateString();
       const doc = new jsPDF('p','mm','a4' );
       const datoscomprapordia = OrdCompra.comprasPorDia
@@ -179,7 +187,8 @@ function Ventas() {
         doc.save(`Compras por dias${fecha}`); 
       }
 
-  const  generarReporte = () =>{
+  const  generarReporte = async() =>{
+    await generarReportes(OrdCompra);
     const doc = new jsPDF('p','mm','a3' );
     const datosStock = OrdCompra.stockProductosNombre
     const datoscomprames = OrdCompra.comprasPorMes
