@@ -31,7 +31,7 @@ const Pedidos = () => {
         {pedidos.length > 0 ? 
         
             pedidos.map((ele, i)=>(
-              <CardPedido ele={ele}/>
+              <CardPedido key={i} ele={ele}/>
             ))
 
         

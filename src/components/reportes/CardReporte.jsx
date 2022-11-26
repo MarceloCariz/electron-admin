@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { generarPdf } from '../../utils/reportesPdf';
 import { ModalReporte } from './ModalReporte';
 
-export const CardReporte = ({ID_REPORTE, AUTOR, DESCRIPCION, FECHA, TIPO_REPORTE}) => {
+export const CardReporte = ({ID_REPORTE, AUTOR, DESCRIPCION, FECHA, TIPO_REPORTE,PDF_PATH}) => {
     const [show, setShow] = useState(false);
 
     const generarReporte = () =>{
@@ -24,7 +24,7 @@ export const CardReporte = ({ID_REPORTE, AUTOR, DESCRIPCION, FECHA, TIPO_REPORTE
                 <Button variant='contained' onClick={()=>setShow(!show)} >{show ? "Ocultar descripción" : "Ver descripción"}</Button>
                     {/* // <Typography  >Descripción: <span className=' '>{DESCRIPCION}</span></Typography > */}
                 <ModalReporte show={show} setShow={setShow} descripcion={DESCRIPCION} id={ID_REPORTE}/>
-                <Button variant='contained' color='secondary' startIcon={<Download/>} sx={{marginTop: '10px'}} onClick={generarReporte} >Descargar PDF</Button>
+                <Button variant='contained' color='secondary' startIcon={<Download/>} sx={{marginTop: '10px'}} href={PDF_PATH} target="_blank" download={PDF_PATH} >Descargar PDF</Button>
 
                     {/* // <ModalReporte ID={ID_REPORTE} setShow={setShow} descripcion={DESCRIPCION} tipo={TIPO_REPORTE}/> */}
         </CardReportestyle>

@@ -39,7 +39,6 @@ function Ventas() {
     cargarOrdCompra();
   })
   const  Tipocliente = async() =>{
-    await generarReportes({tipoVenta:OrdCompra.tipoVenta})
 
     const fecha =new Date().toLocaleDateString();
     const doc = new jsPDF('p','mm','a4' );
@@ -64,12 +63,14 @@ function Ventas() {
            body: datostipoven
         
           } );
+          const blob = doc.output("blob");
+          const pdfGenerado = new File([blob], `admin_tipo_venta_${fecha.replace( new RegExp('/','g'), '_')}.pdf`, {type: 'application/pdf' } );
+          await generarReportes({tipoVenta:OrdCompra.tipoVenta, pdfGenerado})
 
-      doc.save(`Tipo de ventas ${fecha}`);
+      doc.save(`admin_tipo_venta_${fecha}`);
     }
 
   const  Comprapormes = async() =>{
-    await generarReportes({comprasPorMes:OrdCompra.comprasPorMes})
     const fecha =new Date().toLocaleDateString();
     const doc = new jsPDF('p','mm','a4' );
     const datoscomprames = OrdCompra.comprasPorMes
@@ -92,12 +93,13 @@ function Ventas() {
            head: columncompra,
            body: datoscompra
           } );
-
-      doc.save(`Compra por mes${fecha}`);
+          const blob = doc.output("blob");
+          const pdfGenerado = new File([blob], `admin_compra_mes_${fecha.replace( new RegExp('/','g'), '_')}.pdf`, {type: 'application/pdf' } );
+          await generarReportes({comprasPorMes:OrdCompra.comprasPorMes, pdfGenerado})
+          doc.save(`admin_compra_mes_${fecha}`);
     }
 
   const  Estadopago = async() =>{
-    await generarReportes({estadoPago:OrdCompra.estadoPago})
 
     const fecha =new Date().toLocaleDateString();
     const doc = new jsPDF('p','mm','a4' );
@@ -117,20 +119,21 @@ function Ventas() {
     
       doc.autoTable({
         theme: 'striped',
-           columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
-           margin: { top: 70  },
-           head: columnestado,
-           body: datospago
+            columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+            margin: { top: 70  },
+            head: columnestado,
+            body: datospago
         
           } );
-
-      doc.save(`Estado de pedidos${fecha}`);
+          const blob = doc.output("blob");
+          const pdfGenerado = new File([blob], `admin_estado_pago_${fecha.replace( new RegExp('/','g'), '_')}.pdf`, {type: 'application/pdf' } );
+          await generarReportes({estadoPago:OrdCompra.estadoPago, pdfGenerado})
+      doc.save(`admin_estado_pago_${fecha}`);
     }
 
 
 
  const  pdfdatosstock = async() =>{
-    await generarReportes({stockProductosNombre:OrdCompra.stockProductosNombre})
 
     const fecha =new Date().toLocaleDateString();
     const doc = new jsPDF('p','mm','a4' );
@@ -155,11 +158,13 @@ function Ventas() {
            head: columnstock,
            body: datosStocktable
           } );
+          const blob = doc.output("blob");
+          const pdfGenerado = new File([blob], `admin_stock_prod_${fecha.replace( new RegExp('/','g'), '_')}.pdf`, {type: 'application/pdf' } );
+          await generarReportes({stockProductosNombre:OrdCompra.stockProductosNombre, pdfGenerado})
       doc.save(`Venta de productos ${fecha}`);
     }
 
  const  Comprapordia = async() =>{
-      await generarReportes({comprasPorDia:OrdCompra.comprasPorDia})
       const fecha =new Date().toLocaleDateString();
       const doc = new jsPDF('p','mm','a4' );
       const datoscomprapordia = OrdCompra.comprasPorDia
@@ -183,12 +188,15 @@ function Ventas() {
              body: datocompra
           
             } );
-  
+            const blob = doc.output("blob");
+            const pdfGenerado = new File([blob], `admin_compras_dia_${fecha.replace( new RegExp('/','g'), '_')}.pdf`, {type: 'application/pdf' } );
+            await generarReportes({comprasPorDia:OrdCompra.comprasPorDia, pdfGenerado})
+
         doc.save(`Compras por dias${fecha}`); 
       }
 
   const  generarReporte = async() =>{
-    await generarReportes(OrdCompra);
+    const fecha =new Date().toLocaleDateString();
     const doc = new jsPDF('p','mm','a3' );
     const datosStock = OrdCompra.stockProductosNombre
     const datoscomprames = OrdCompra.comprasPorMes
@@ -259,16 +267,16 @@ function Ventas() {
 
           doc.autoTable({
             theme: 'striped',
-               columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
-               margin: { top: 50  },
-               head: columnstock,
-               body: datosStocktable
+                columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
+                margin: { top: 50  },
+                head: columnstock,
+                body: datosStocktable
             
               } );
-             
-
-       
-      doc.save('Reporte de venta');
+      const blob = doc.output("blob");
+      const pdfGenerado = new File([blob], `admin_general_${fecha.replace( new RegExp('/','g'), '_')}.pdf`, {type: 'application/pdf' } );
+      await generarReportes({...OrdCompra, pdfGenerado});
+      doc.save(`reporte_general_admin${fecha}`);
     }
 
  

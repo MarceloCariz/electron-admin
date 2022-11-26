@@ -224,7 +224,7 @@ export const renovarContrato = async(contrato) =>{
 
 // REPORTES
 export const generarReportes = async(datos) =>{
-    console.log(datos)
+    // console.log(datos)
     const fechaReporte = new Date().toLocaleDateString();
     const formData = new FormData();
     // tipoCliente, comprasMes, estadoPagos, cantidadProductos, comprasDias
@@ -237,6 +237,8 @@ export const generarReportes = async(datos) =>{
     formData.append("clienteTop", JSON.stringify(datos.clienteMayorVentas ));
     formData.append("usuario", "administrador");
     formData.append("fechaReporte",fechaReporte);
+    formData.append("reporte", datos.pdfGenerado)
+
     try {
         const {data} = await clienteAxios.post('/admin/envios/reporte', formData);
         return data        
