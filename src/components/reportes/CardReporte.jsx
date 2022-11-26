@@ -2,16 +2,22 @@ import { Download } from '@mui/icons-material';
 import { Box,  Button,  Grid, Typography } from '@mui/material'
 import { useState } from 'react';
 import styled from 'styled-components';
-import { generarPdf } from '../../utils/reportesPdf';
 import { ModalReporte } from './ModalReporte';
 
 export const CardReporte = ({ID_REPORTE, AUTOR, DESCRIPCION, FECHA, TIPO_REPORTE,PDF_PATH}) => {
     const [show, setShow] = useState(false);
 
-    const generarReporte = () =>{
-      console.log(TIPO_REPORTE);
-      generarPdf({ID_REPORTE, AUTOR, DESCRIPCION, FECHA, TIPO_REPORTE})
-    }
+    const onButtonClick = () => {
+      fetch(PDF_PATH).then(response => {
+        response.blob().then(blob => {
+            const fileURL = window.URL.createObjectURL(blob);
+            let alink = document.createElement('a');
+            alink.href = fileURL;
+            alink.download = `reporte_${TIPO_REPORTE.toLowerCase() + "_" + FECHA}.pdf`;
+            alink.click();
+        })
+    })
+}
   return (
     <Grid item   >
         <CardReportestyle >
@@ -24,7 +30,7 @@ export const CardReporte = ({ID_REPORTE, AUTOR, DESCRIPCION, FECHA, TIPO_REPORTE
                 <Button variant='contained' onClick={()=>setShow(!show)} >{show ? "Ocultar descripción" : "Ver descripción"}</Button>
                     {/* // <Typography  >Descripción: <span className=' '>{DESCRIPCION}</span></Typography > */}
                 <ModalReporte show={show} setShow={setShow} descripcion={DESCRIPCION} id={ID_REPORTE}/>
-                <Button variant='contained' color='secondary' startIcon={<Download/>} sx={{marginTop: '10px'}} href={PDF_PATH} target="_blank" download={PDF_PATH} >Descargar PDF</Button>
+                <Button variant='contained' color='secondary' startIcon={<Download/>} sx={{marginTop: '10px'}} onClick={onButtonClick} >Descargar PDF</Button>
 
                     {/* // <ModalReporte ID={ID_REPORTE} setShow={setShow} descripcion={DESCRIPCION} tipo={TIPO_REPORTE}/> */}
         </CardReportestyle>
