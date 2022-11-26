@@ -34,16 +34,18 @@ export const Activos = () => {
 
 
     const columns =[
-      { field: 'ID_CONTRATO', headerName: 'ID', flex:1, minWidth: 150 , renderCell: (params) => <p> {params.row.ID_CONTRATO} </p>},
-      { field: 'FECHA_INICIO', headerName: 'Fecha Inicio', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.FECHA_INICIO}</>},
-      { field: 'FECHA_TERMINO', headerName: 'Fecha Termino', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.FECHA_TERMINO}</>},
-      { field: 'SUELDO', headerName: 'Sueldo', flex:1 , minWidth: 150 , renderCell: (params) => <>{params.row.SUELDO}</>}
+      { field: 'ID_CONTRATO', headerName: 'ID', flex:1, minWidth: 150 , renderCell: (params) => <p >#{params.row.ID_CONTRATO} </p>},
+      { field: 'FECHA_INICIO', headerName: 'Fecha Inicio', flex:1 , minWidth: 150 , renderCell: (params) => <>{ new Date(params.row.FECHA_INICIO).toLocaleDateString('es-MX', {year: 'numeric', month: 'long', day: 'numeric'}) }</>},
+      { field: 'FECHA_TERMINO', headerName: 'Fecha Termino', flex:1 , minWidth: 150 , renderCell: (params) => <>{ new Date(params.row.FECHA_TERMINO).toLocaleDateString('es-MX', {year: 'numeric', month: 'long', day: 'numeric'}) }</>},
+      { field: 'SUELDO', headerName: 'Sueldo', flex:1 , minWidth: 150 , renderCell: (params) => <> ${params.row.SUELDO}</>}
       ];
       
     
       return (
         <>
+        
         <div>
+        <h1>Contratos Activos</h1>
             {/* -------------------FORM------------------------ */}
             <DataGrid
                 style={{  width: '70vw' , backgroundColor: 'white'}}
