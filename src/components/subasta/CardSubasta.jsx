@@ -25,7 +25,11 @@ export const CardSubasta = ({ele, cargarPedidos}) => {
         const fecha_activacion = new Date(fecha2).toISOString()
         const data = {referencia_compra: e.target.id, fecha_activacion, activo: 'true'};
         if(ele.some(({ESTADO_ENVIO})=>(ESTADO_ENVIO ==='bodega'))){
-        await activarSubastaTransport(data);
+        const alerta = await activarSubastaTransport(data);
+        setMensaje(alerta.msg);
+        setTimeout(() => {
+            setMensaje('');
+          }, 3000);
           // window.location.reload();
         return;
         }

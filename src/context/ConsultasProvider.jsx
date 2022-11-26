@@ -1,5 +1,5 @@
 import { createContext, useState } from "react"
-import { obtenerClientes, obtenerContratos, obtenerEnvios, obtenerProductores, obtenerTransportistas } from "../helpers/getAdmin";
+import { listarReportes, obtenerClientes, obtenerContratos, obtenerEnvios, obtenerProductores, obtenerTransportistas } from "../helpers/getAdmin";
 
 
 
@@ -20,6 +20,11 @@ const ConsultasProvider = ({children}) => {
     const [pedidos, setPedidos] = useState([]);
     const [contratos, setContratos] = useState([]);
     const [contratosActivos, setContratosActivos] = useState([]);
+
+    // reportes
+    const [reportes, setReportes] = useState([]);
+    const [reportesBackup, setReportesBackup] = useState([]);
+
     const cargarProductores = async()=>{
         const respuesta = await obtenerProductores();
         setProductores(respuesta);
@@ -53,6 +58,13 @@ const ConsultasProvider = ({children}) => {
 
         setCargando(false)
     }
+
+    const cargarReportes = async()=>{
+        const respuesta = await listarReportes();
+        // console.log(respuesta)
+        setReportesBackup(respuesta);
+        setReportes(respuesta);
+    }
     return (
         <consultasContext.Provider value={{
             cargarProductores, productores,
@@ -60,6 +72,7 @@ const ConsultasProvider = ({children}) => {
             cargartransportistas, transportistas,
             cargarPedidos,  pedidos,                        //// subasta disponibles
             cargarContratos, contratos, contratosActivos,
+            reportes, setReportes, reportesBackup, cargarReportes,/// REPORTES
             cargando,                               /// UI
             }}>
             {children}
