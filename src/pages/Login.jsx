@@ -126,10 +126,11 @@ const Div = styled.form`
 
 const Fondo = styled.div`
   background-image: url(${fondo});
-  object-fit: cover;
-  min-height:100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
   box-sizing: content-box;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   justify-items: center;
