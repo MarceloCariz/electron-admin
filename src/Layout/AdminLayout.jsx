@@ -8,6 +8,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import AllInboxIcon from '@mui/icons-material/AllInbox';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import { Inventory } from '@mui/icons-material';
 const AdminLayout = () => {
     const history = useNavigate();
     const logOut = () =>{
@@ -59,6 +60,15 @@ const AdminLayout = () => {
                     <ContainerOpciones>
                         <SubtituloOpcion to={'ventas'}>Ventas</SubtituloOpcion>
                         <SubtituloOpcion to={'informes'}>Informes</SubtituloOpcion>
+                    </ContainerOpciones>
+                </div>
+                <div>
+                    <Tituloopcion>
+                    <Icon component={Inventory} />
+                        Productos</Tituloopcion>
+                    <ContainerOpciones>
+                        <SubtituloOpcion to={'productos'}>Productos Disponibles</SubtituloOpcion>
+                        {/* <SubtituloOpcion to={'informes'}>Informes</SubtituloOpcion> */}
                     </ContainerOpciones>
                 </div>
                 <div>

@@ -159,16 +159,16 @@ export const obtenerEnvios = async() =>{
     const {data} = await  clienteAxios('/admin/ordenes');
     const obj = data.reduce((acc, product)=>{
         if(!acc[product.REFERENCIA_COMPRA]){
-          acc[product.REFERENCIA_COMPRA] = []
+            acc[product.REFERENCIA_COMPRA] = []
         }
-        // console.log(product)
-        acc[product.REFERENCIA_COMPRA].push(product)
-  
-        return acc
-      },[]);
-     
+            // console.log(product)
+            acc[product.REFERENCIA_COMPRA].push(product)
     
-    return obj.sort(sortBy('FECHA_COMPRA'));
+            return acc
+    },[]);
+
+    
+    return obj.sort(sortBy('ID'));
 }
 
 export const activarSubasta = async(datos)=>{
@@ -251,6 +251,62 @@ export const listarReportes = async() =>{
         const {data} = await clienteAxios('/admin/envios/reporte/listar');
         // console.log(data)
         return data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const listarProductosProductor = async() => {
+    try {
+        const {data} = await clienteAxios('/admin/producto/productor/lista');
+        return data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const eliminarProductoProductor = async(id) =>{
+    try {
+        console.log(id)
+        const {data} = await clienteAxios.delete(`/admin/producto/productor/eliminar/${id}`);
+        return data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const listarNombresDisponibles = async() =>{
+    try {
+        const {data} = await clienteAxios('/admin/producto/nombre/lista');
+        return data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const agregarNombreDisponible = async(nombre) =>{
+    try {
+        const {data} = await clienteAxios.post('/admin/producto/nuevo', {nombre});
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const editarNombreDisponible = async(datos) =>{
+    try {
+        const {data} = await clienteAxios.put('/admin/producto/nombre/editar', datos);
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const eliminarNombreDisponible = async(id) =>{
+    try {
+        const {data} = await clienteAxios.delete(`/admin/producto/nombre/eliminar/${id}`);
+        return data
     } catch (error) {
         console.log(error)
     }

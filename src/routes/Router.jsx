@@ -13,6 +13,7 @@ import { Activos } from '../pages/contratos/Activos'
 import { Vencidos } from '../pages/contratos/Vencidos'
 import { ConsultasProvider } from '../context/ConsultasProvider'
 import { Informes } from '../pages/Informes'
+import { Productos } from '../pages/Productos'
 
 
 const Router = () => {  
@@ -27,16 +28,17 @@ const Router = () => {
             </Route>
           {/* Ruta Protegida */}
             <Route path='/inicio' element={<AdminLayout/>}>
-               <Route index element={<Ventas/>}/>
-               <Route path='productores' element={<Productores/>}/>
-               <Route path='transportistas' element={<Transportistas/>}/>
-               <Route path='clientes' element={<Clientes/>}/>
-               <Route path='pedidos' element={<Pedidos/>}/>
-               <Route path='ventas' element={<Ventas/>}/>
-               <Route path='subastas' element={<Subastas/>}/>
-               <Route path='contratos/activos' element={<Activos/>}/>
-               <Route path='contratos/vencidos' element={<Vencidos/>}/>
-               <Route path='informes'  element={<Informes/>} />
+                <Route index element={<Ventas/>}/>
+                <Route path='productores' element={<Productores/>}/>
+                <Route path='transportistas' element={<Transportistas/>}/>
+                <Route path='clientes' element={<Clientes/>}/>
+                <Route path='pedidos' element={<Pedidos/>}/>
+                <Route path='ventas' element={<Ventas/>}/>
+                <Route path='subastas' element={<Subastas/>}/>
+                <Route path='contratos/activos' element={<Activos/>}/>
+                <Route path='contratos/vencidos' element={<Vencidos/>}/>
+                <Route path='informes'  element={<Informes/>} />
+                <Route path='productos'  element={<Productos/>} />
             </Route>
         </Routes>
       </ConsultasProvider>
