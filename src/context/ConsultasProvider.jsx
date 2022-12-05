@@ -1,5 +1,5 @@
 import { createContext, useState } from "react"
-import { listarReportes, obtenerClientes, obtenerContratos, obtenerEnvios, obtenerProductores, obtenerTransportistas } from "../helpers/getAdmin";
+import { listarNombresDisponibles, listarProductosProductor, listarReportes, obtenerClientes, obtenerContratos, obtenerEnvios, obtenerProductores, obtenerTransportistas } from "../helpers/getAdmin";
 
 
 
@@ -20,6 +20,10 @@ const ConsultasProvider = ({children}) => {
     const [pedidos, setPedidos] = useState([]);
     const [contratos, setContratos] = useState([]);
     const [contratosActivos, setContratosActivos] = useState([]);
+    /// PRODUCTOS
+    const [nombres, setNombres] = useState([]);
+    const [productos, setProductos] = useState([])
+
 
     // reportes
     const [reportes, setReportes] = useState([]);
@@ -65,6 +69,13 @@ const ConsultasProvider = ({children}) => {
         setReportesBackup(respuesta);
         setReportes(respuesta);
     }
+
+    const cargarDatosProductos = async() =>{
+        const resp = await listarProductosProductor();
+        setProductos(resp)
+        const names = await listarNombresDisponibles();
+        setNombres(names.sort((a, b)=> b.ID - a.ID))
+    }
     return (
         <consultasContext.Provider value={{
             cargarProductores, productores,
@@ -73,6 +84,7 @@ const ConsultasProvider = ({children}) => {
             cargarPedidos,  pedidos,                        //// subasta disponibles
             cargarContratos, contratos, contratosActivos,
             reportes, setReportes, reportesBackup, cargarReportes,/// REPORTES
+            cargarDatosProductos, productos, nombres,
             cargando,                               /// UI
             }}>
             {children}

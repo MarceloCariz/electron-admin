@@ -4,19 +4,24 @@
 import { Alert, Box, Button, Input, Modal, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { agregarNombreDisponible } from '../../helpers/getAdmin';
+import useConsultas from '../../hooks/useConsultas';
 
 export const ModalAgregar = ({modalAgregar, setModalAgregar}) => {
     const [nombre, setNombre] = useState('');
     const [mensaje, setMensaje] = useState('')
 
+    const {cargarDatosProductos} = useConsultas();
 
 
-    const handleSubmit = async() =>{
+
+    const handleSubmit = async(e) =>{
+        e.preventDefault();
         const resp = await agregarNombreDisponible(nombre);
         setMensaje(resp)
         setTimeout(() => {
             setMensaje('')
-            window.location.reload();
+            setNombre('');
+            cargarDatosProductos();
         }, 2000);
     } 
     return (
@@ -32,8 +37,10 @@ export const ModalAgregar = ({modalAgregar, setModalAgregar}) => {
                 </Typography>
                 {mensaje && <Alert variant='filled' color={ 'success'}>{mensaje}</Alert>}
                 <Box display={"flex"} gap={5} marginTop={2}>
-                    <Input value={nombre} onChange={(e) => setNombre(e.target.value)}/>
-                    <Button variant="contained"  onClick={handleSubmit} >Agregar a la lista</Button>
+                    <form onSubmit={handleSubmit}>
+                        <Input value={nombre} onChange={(e) => setNombre(e.target.value)}/>
+                        <Button  type="submit" variant="contained"  onClick={handleSubmit} >Agregar a la lista</Button>
+                    </form>
                 </Box>
             </Box>
         </Modal>

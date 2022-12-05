@@ -1,20 +1,15 @@
 import { Box,  Grid, Typography } from '@mui/material'
-import { useState,  useEffect} from 'react'
+import {   useEffect} from 'react'
 import { CardProducto } from '../components/productos/CardProducto';
 import { NombresProducto } from '../components/productos/NombresProducto';
-import { listarNombresDisponibles, listarProductosProductor } from '../helpers/getAdmin'
+import useConsultas from '../hooks/useConsultas';
 
 export const Productos = () => {
-    const [productos, setProductos] = useState([]);
-    const [nombres, setNombres] = useState([]);
+
+    const {cargarDatosProductos, nombres, productos} = useConsultas();
     useEffect(()=>{
-        const cargarDatos = async() =>{
-            const resp = await listarProductosProductor();
-            setProductos(resp)
-            const names = await listarNombresDisponibles();
-            setNombres(names)
-        }
-        cargarDatos()
+
+        cargarDatosProductos()
     },[])
     return (
         <Box marginTop={4} >

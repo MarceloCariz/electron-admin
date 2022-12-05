@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import { Alert, Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, Typography } from '@mui/material'
+import { Alert,  Button, Card, CardActions,  CardHeader, CardMedia, Grid} from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { eliminarProductoProductor } from '../../helpers/getAdmin';
+import useConsultas from '../../hooks/useConsultas';
 
 
 export const CardProducto = ({ID_PRODUCTO, NOMBRE, IMAGE_URL}) => {
-    const [mensaje, setMensaje] = useState('')
+    const [mensaje, setMensaje] = useState('');
+    const {cargarDatosProductos} = useConsultas();
+
     const eliminarProducto = async() =>{
         const resp = await eliminarProductoProductor(ID_PRODUCTO);
         setMensaje(resp);
 
         setTimeout(() => {
             setMensaje('');
-            window.location.reload();
+            cargarDatosProductos();
         }, 2000);
     }
 

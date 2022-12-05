@@ -1,10 +1,13 @@
-import { Alert, Box, IconButton, Input, List, ListItem, ListItemIcon, ListItemText, Modal, Typography } from '@mui/material'
+import { Alert, Box, IconButton, Input, ListItem, ListItemIcon, ListItemText } from '@mui/material'
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
 import { editarNombreDisponible, eliminarNombreDisponible } from '../../helpers/getAdmin';
+import useConsultas from '../../hooks/useConsultas';
 export const ListaNombre = ({NOMBRE, ID}) => {
+
+    const {cargarDatosProductos} = useConsultas();
 
     const [nombre, setNombre] = useState(NOMBRE)
     const [mensaje, setMensaje] = useState({error: false, msg:''})
@@ -18,7 +21,7 @@ export const ListaNombre = ({NOMBRE, ID}) => {
             setMensaje({error:true, msg:resp})
             setTimeout(() => {
                 setMensaje({error: false, msg:''})
-                window.location.reload();
+                cargarDatosProductos();
             }, 2000);
         }
 
@@ -27,7 +30,7 @@ export const ListaNombre = ({NOMBRE, ID}) => {
             setMensaje({error:false, msg:resp})
             setTimeout(() => {
                 setMensaje({error: false, msg:''})
-                window.location.reload();
+                cargarDatosProductos();
             }, 2000);
         }
     return (
@@ -48,7 +51,7 @@ export const ListaNombre = ({NOMBRE, ID}) => {
             {mensaje.msg ? <Alert variant='filled' color={`${mensaje.error ? 'error' : 'success'}`}>{mensaje.msg}</Alert>
                 : 
                 <>
-                        <Input  value={nombre || ''} onChange={handleChange} />
+                        <Input sx={{width: 200}}  value={nombre || ''} onChange={handleChange} />
                         <ListItemText secondary={`ID: ${ID}`}/>
                 </>
             }

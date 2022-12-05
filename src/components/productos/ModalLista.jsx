@@ -7,7 +7,6 @@ import { ListaNombre } from './ListaNombre';
 export const ModalLista = ({modal, setModal, nombres}) => {
 
 
-
     return (
         <Modal
         open={modal}
@@ -15,11 +14,11 @@ export const ModalLista = ({modal, setModal, nombres}) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         >
-            <Box sx={{ ...style, width: 400, height: 500, borderRadius:"10px" }}>
+            <Box sx={{ ...style, width: 500, height: 500, borderRadius:"10px" }}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                 Lista de Nombres Disponibles
                 </Typography>
-                <List>
+                <List sx={{height: 460, overflowY: 'auto', marginTop: 2}}>
                     {
                         nombres.length > 0 && nombres.map(({ID, NOMBRE})=>(
                             <ListaNombre key={ID} NOMBRE={NOMBRE} ID={ID}/>
