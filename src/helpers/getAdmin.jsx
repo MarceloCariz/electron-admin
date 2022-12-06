@@ -16,9 +16,15 @@ export const login = async (datos) =>{
 // <------------------------- productores ------------------------->
 
 export const agregarProductor = async(productor) =>{
-    const {nombre, correo, password} = productor;
-    const {data} = await clienteAxios.post('/productores/nuevo',{nombre, correo, password});
-    return data
+    // try {
+        const {nombre, correo, password} = productor;
+        const {data} = await clienteAxios.post('/productores/nuevo',{nombre, correo: correo, password});
+        return data
+    // } catch (error) {
+    //     console.log(error)
+    //     return error.response.data;
+    // }
+
 
 }
 
@@ -33,14 +39,9 @@ export const obtenerProductores = async()=>{
 }
 
 export const editarProductores = async(datos)=>{
-    try {
-        await clienteAxios.put(`/admin/productor/actualizar/${datos.id}`, {nombre: datos.nombre, correo: datos.correo})
+    const {data} = await clienteAxios.put(`/admin/productor/actualizar/${datos.id}`, {nombre: datos.nombre, correo: datos.correo})
 
-    } catch (error) {
-        console.log("Error GetAdmins.jsx | Tipo: Put | Act: editarProductores")
-        console.log(error)
-        console.log("Error GetAdmins.jsx ==================================")
-    }
+    return data;
 
 }
 
@@ -78,15 +79,9 @@ export const obtenerTransportistas = async()=>{
 }
 
 export const editarTransportistas = async(datos)=>{
-    console.log(datos)
-    try {
-       const {data} =  await clienteAxios.put(`/admin/transportista/actualizar/${datos.id}`, {nombre: datos.nombre, correo: datos.correo})
-       return data
-    } catch (error) {
-        console.log("Error GetAdmins.jsx | Tipo: Put | Act: editarTransportistas")
-        console.log(error)
-        console.log("Error GetAdmins.jsx ==================================")
-    }
+    const {data} =  await clienteAxios.put(`/admin/transportista/actualizar/${datos.id}`, {nombre: datos.nombre, correo: datos.correo})
+    return data
+    
 
 }
 
@@ -105,12 +100,9 @@ export const borrarTransportistas = async(clienteID)=>{
 // <--------------------------- clientes --------------------------->
 
 export const agregarClientes = async(clientes) =>{
-    try {
-        const {data} = await clienteAxios.post('/clientes/nuevo', clientes);
-        return data
-    } catch (error) {
-        console.log(error)
-    }
+    const {data} = await clienteAxios.post('/clientes/nuevo', clientes);
+    return data
+
 }
 
 export const obtenerClientes = async()=>{
@@ -126,19 +118,10 @@ export const obtenerClientes = async()=>{
 }
 
 export const editarClientes = async(datos)=>{
-    console.log(datos)
-    try {
         //await clienteAxios.put(`/admin/cliente/actualizar/${ clienteID.toString() }`, datos)
         //.then( res => console.log("Cliente n° "+ clienteID + " borrado!"))
-        const {data} =  await clienteAxios.put(`/admin/cliente/actualizar/${datos.id}`, {nombre: datos.nombre, correo: datos.correo})
-        return data
-
-    } catch (error) {
-        console.log("Error GetAdmins.jsx | Tipo: Put | Act: editarClientes")
-        console.log(error)
-        console.log("Error GetAdmins.jsx ==================================")
-    }
-
+    const {data} =  await clienteAxios.put(`/admin/cliente/actualizar/${datos.id}`, {nombre: datos.nombre, correo: datos.correo})
+    return data
 }
 
 export const borrarClientes = async(clienteID)=>{

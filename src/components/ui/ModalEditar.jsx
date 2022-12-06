@@ -23,7 +23,7 @@ const ModalEditar = ({open, handleClose, handleEditar, onChange, nombre, correo,
       <Typography id="modal-modal-title" variant="h6" component="h2">
       Complete todos los campos
       </Typography>
-      {error && <Alert   variant="filled" severity='error' style={{marginTop: '20px'}}>{error}</Alert>}
+      {error.msg && <Alert   variant="filled" severity={error.error ? 'error' : 'success'} style={{marginTop: '20px'}}>{error.msg}</Alert>}
       <FormContainer   autoComplete="off"  component="form"  onSubmit={handleEditar} validate="true">
           <TextField margin="dense" variant="filled" label="Nombre"  name='nombre' onChange={onChange} type="text" value={nombre}  />
           <TextField margin="dense" variant="filled" label="Correo" name='correo' onChange={onChange} type="text" value={correo} />

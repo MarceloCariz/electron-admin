@@ -26,10 +26,10 @@ const ModalAgregar = ({usuario,tipoCliente,rut,handleChangeTipoCliente ,open, ha
           <Typography id="modal-modal-title" variant="h6" >
             Complete todos los campos
           </Typography>
-          {error && <Alert   variant="filled" severity='error' style={{marginTop: '20px'}}>{error}</Alert>}
+          {error.msg && <Alert   variant="filled" severity={error.error ? 'error' : 'success'} style={{marginTop: '20px'}}>{error.msg}</Alert>}
           <FormContainer   autoComplete="off"  component="form" action="" onSubmit={handleAgregar} validate="true">
               <TextField margin="dense" variant="filled" label="Nombre"  name='nombre'    onChange={onChange}  type="text" value={nombre}  />
-              <TextField margin="dense" variant="filled" label="Correo" name='correo' onChange={onChange} type="text" value={correo} />
+              <TextField margin="dense" type="email" variant="filled" label="Correo" name='correo' onChange={onChange} value={correo} />
               <TextField  margin="dense" variant="filled" label="Contraseña"  name='password' onChange={onChange} type="text" value={password} />
               {usuario === "cliente" && (
                 // <TextField  margin="dense" variant="filled" label="Contraseña"  name='tipo' onChange={onChange} type="text" value={password} />
@@ -48,7 +48,7 @@ const ModalAgregar = ({usuario,tipoCliente,rut,handleChangeTipoCliente ,open, ha
                 </FormControl>
               )}
               {usuario === "cliente" && tipoCliente === "local" &&(
-                <TextField margin='dense' variant="filled" label="Rut"  name='rut' onChange={onChange} type="text" placeholder='11.111.111-3' value={rut}/>
+                <TextField margin='dense' variant="filled" label="Rut"  name='rut' onChange={onChange} type="text" placeholder='11111111-3' value={rut}/>
               )}
               <Button variant='contained' color="success" type='submit'>Agregar</Button>
           </FormContainer>

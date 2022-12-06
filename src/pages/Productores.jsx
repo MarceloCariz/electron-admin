@@ -13,7 +13,7 @@ import useConsultas from '../hooks/useConsultas';
 
 const Productores = () => {
     // const [productores, setProductores] = useState([]);
-    const [alerta, setAlerta] = useState("")
+    const [alerta, setAlerta] = useState({error:false, msg: ""})
     const [formValues, setFormValues] = useState({nombre: '', correo: '', id: 0, password: ''});
     const {nombre, correo, password } = formValues;
     ///MODALES
@@ -70,25 +70,43 @@ const  handleAgregar = async(e) =>{
     }, 3000);
     return;
   }
-  await agregarProductor(formValues);
+  try {
+    const resp = await agregarProductor(formValues);
+    setAlerta({error: false, msg: resp.msg});
+    setFormValues({ nombre: '', correo: '', id:  '' ,password: ''});
+  } catch (error) {
+    console.log(error)
+    setAlerta({error: true, msg:error.response.data.msg })
+  }
 
   cargarProductores();
-  handleCloseAgregar();
-
+  setTimeout(() => {
+    setAlerta({error: false, msg:''});
+  }, 2000);
+  // handleCloseAgregar();
 }
 
 const handleEditarProductor = async(e) =>{
     e.preventDefault();
     if ([correo, nombre].includes("")) {
-      setAlerta('Todos los campos son obligatorios')
+      setAlerta({error: false, msg:'Todos los campos son obligatorios'})
       setTimeout(() => {
-        setAlerta('');
+        setAlerta({error: false, msg:''});
       }, 2000);
       return;
     }
-    await editarProductores(formValues);
+    try {
+      const resp = await editarProductores(formValues);
+      setAlerta({error: false, msg: resp.msg});
+    } catch (error) {
+      console.log(error)
+      setAlerta({error: true, msg:error.response.data.msg })
+    }
     cargarProductores();
-    handleCloseEditar();
+    setTimeout(() => {
+      setAlerta({error: false, msg:''});
+      handleCloseEditar();
+    }, 2000);
 
 }
 

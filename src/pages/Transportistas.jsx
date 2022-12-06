@@ -14,7 +14,7 @@ import useConsultas from '../hooks/useConsultas';
 
 const Transportistas = () => {
   //DATOS
-  const [alerta, setAlerta] = useState("")
+  const [alerta, setAlerta] = useState({error: false, msg: ''})
   const [formValues, setFormValues] = useState({nombre: '', correo: '', id: 0, password: ''});
   ///MODALES
   const [openAgregar, setOpenAgregar] = useState(false);
@@ -74,10 +74,18 @@ const  handleAgregar = async(e) =>{
     }, 3000);
     return;
   }
-  await agregarTransportistas(formValues);
+  try {
+    const resp = await agregarTransportistas(formValues);
+    setAlerta({error: false, msg: resp.msg});
+    setFormValues({ nombre: '', correo: '', id:  '' ,password: ''});
+  } catch (error) {
+    console.log(error)
+    setAlerta({error: true, msg:error.response.data.msg })
+  }
   cargartransportistas();
-  handleCloseAgregar();
-
+  setTimeout(() => {
+    setAlerta({error: false, msg:''});
+  }, 2000);
 }
 
 const handleEditarTransport = async(e) =>{
@@ -89,9 +97,18 @@ const handleEditarTransport = async(e) =>{
       }, 2000);
       return;
     }
-    await editarTransportistas(formValues);
+    try {
+    const resp = await editarTransportistas(formValues);
+      setAlerta({error: false, msg: resp.msg});
+    } catch (error) {
+      console.log(error)
+      setAlerta({error: true, msg:error.response.data.msg })
+    }
     cargartransportistas();
-    handleCloseEditar();
+    setTimeout(() => {
+      setAlerta({error: false, msg:''});
+      handleCloseEditar();
+    }, 2000);
 }
 
 const RemoveTransportista = async(e)=>{
