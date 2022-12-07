@@ -50,15 +50,15 @@ function Ventas() {
 
   
       // 1 - x 200  /////  2- y
-      doc.addImage(maipo, 'PNG', 0, 0,60,0, undefined, false);
+      doc.addImage(maipo, 'PNG', 2, 3,58,0, undefined, false);
       doc.setFontSize(20);
-      doc.text(`Fecha de creacion: ${fecha}`, 110 , 8);
+      doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
       doc.setFontSize(45);
-      doc.text(`Tipos de ventas`,45, 65)
+      doc.text(`Tipo de ventas`,45, 65)
       doc.setFontSize(20);
-      doc.text(`Hecho por: Administrador`,4, 18)
+      doc.text(`Hecho por: Administrador`,6, 21)
       doc.setFontSize(20);
-      doc.text(`http://www.maipogrande.ml/`,1, 230)
+      doc.text(`http://www.maipogrande.ml/`,1, 220)
       doc.rect(20, 50, 170, 20); 
     
       doc.autoTable({
@@ -87,15 +87,15 @@ function Ventas() {
 
   
       // 1 - x 200  /////  2- y
-      doc.addImage(maipo, 'PNG', 0, 0,60,0, undefined, false);
+      doc.addImage(maipo, 'PNG', 2, 3,58,0, undefined, false);
       doc.setFontSize(20);
-      doc.text(`Fecha de creacion: ${fecha}`, 110 , 8);
+      doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
       doc.setFontSize(45);
-      doc.text(`Compras hechas por mes`,15, 65)
+      doc.text(`Compras hechas por mes`,45, 65)
       doc.setFontSize(20);
-      doc.text(`Hecho por: Administrador`,4, 18)
+      doc.text(`Hecho por: Administrador`,6, 21)
       doc.setFontSize(20);
-      doc.text(`http://www.maipogrande.ml/`,1, 230)
+      doc.text(`http://www.maipogrande.ml/`,1, 220)
       doc.rect(10, 50, 190, 20); 
       
     
@@ -125,15 +125,15 @@ function Ventas() {
 
   
       // 1 - x 200  /////  2- y
-      doc.addImage(maipo, 'PNG', 0, 0,60,0, undefined, false);
+      doc.addImage(maipo, 'PNG', 2, 3,58,0, undefined, false);
       doc.setFontSize(20);
-      doc.text(`Fecha de creacion: ${fecha}`, 110 , 8);
+      doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
       doc.setFontSize(45);
-      doc.text(`Estado de las compras`,15, 65)
+      doc.text(`Estado de la compras`,45, 65)
       doc.setFontSize(20);
-      doc.text(`Hecho por: Administrador`,4, 18)
+      doc.text(`Hecho por: Administrador`,6, 21)
       doc.setFontSize(20);
-      doc.text(`http://www.maipogrande.ml/`,1, 230)
+      doc.text(`http://www.maipogrande.ml/`,1, 220)
       doc.rect(12, 50, 170, 20); 
     
       doc.autoTable({
@@ -164,15 +164,15 @@ function Ventas() {
 
 
       // 1 - x 200  /////  2- y
-      doc.addImage(maipo, 'PNG', 0, 0,60,0, undefined, false);
+      doc.addImage(maipo, 'PNG', 2, 3,58,0, undefined, false);
       doc.setFontSize(20);
-      doc.text(`Fecha de creacion: ${fecha}`, 110 , 8);
+      doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
       doc.setFontSize(45);
-      doc.text(`Productos disponibles`,15, 65)
+      doc.text(`Productos disponibles`,45, 65)
       doc.setFontSize(20);
-      doc.text(`Hecho por: Administrador`,4, 18)
+      doc.text(`Hecho por: Administrador`,6, 21)
       doc.setFontSize(20);
-      doc.text(`http://www.maipogrande.ml/`,1, 230)
+      doc.text(`http://www.maipogrande.ml/`,1, 220)
       doc.rect(12, 50, 170, 20); 
     
    
@@ -200,15 +200,15 @@ function Ventas() {
   
     
         // 1 - x 200  /////  2- y
-        doc.addImage(maipo, 'PNG', 0, 0,60,0, undefined, false);
+        doc.addImage(maipo, 'PNG', 2, 3,58,0, undefined, false);
         doc.setFontSize(20);
-        doc.text(`Fecha de creacion: ${fecha}`, 110 , 8);
+        doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
         doc.setFontSize(45);
-        doc.text(`Compras por dia`,15, 65)
+        doc.text(`Compras por dia`,45, 65)
         doc.setFontSize(20);
-        doc.text(`Hecho por: Administrador`,4, 18)
+        doc.text(`Hecho por: Administrador`,6, 21)
         doc.setFontSize(20);
-        doc.text(`http://www.maipogrande.ml/`,1, 230)
+        doc.text(`http://www.maipogrande.ml/`,1, 220)
         doc.rect(12, 50, 170, 20); 
       
         doc.autoTable({
@@ -257,15 +257,15 @@ function Ventas() {
     // info.push([ ...element])});      
       // 1 - x 200  /////  2- y
 
-      doc.addImage(maipo, 'PNG', 0, 0,60,0, undefined, false);
-      doc.setFontSize(20);
-      doc.text(`Fecha de creacion: ${fecha}`, 200 , 8);
-      doc.setFontSize(45);
-      doc.text(`Reporte General`,70, 65)
-      doc.setFontSize(20);
-      doc.text(`Hecho por: Administrador`,4, 18)
-      doc.setFontSize(20);
-      doc.text(`http://www.maipogrande.ml/`,1, 410)
+      doc.addImage(maipo, 'PNG', 2, 3,58,0, undefined, false);
+        doc.setFontSize(20);
+        doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
+        doc.setFontSize(45);
+        doc.text(`Reporte general`,45, 65)
+        doc.setFontSize(20);
+        doc.text(`Hecho por: Administrador`,6, 21)
+        doc.setFontSize(20);
+        doc.text(`http://www.maipogrande.ml/`,1, 220)
      
       doc.rect(50, 50, 170, 20);
    
