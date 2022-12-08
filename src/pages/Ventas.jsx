@@ -54,12 +54,12 @@ function Ventas() {
       doc.setFontSize(20);
       doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
       doc.setFontSize(45);
-      doc.text(`Tipo de ventas`,45, 65)
+      doc.text(`Tipos de ventas`,45, 65)
       doc.setFontSize(20);
       doc.text(`Hecho por: Administrador`,6, 21)
       doc.setFontSize(20);
-      doc.text(`http://www.maipogrande.ml/`,1, 220)
-      doc.rect(20, 50, 170, 20); 
+      doc.text(`http://www.maipogrande.ml/`,9, 220)
+      doc.rect(12, 50, 185, 20); 
     
       doc.autoTable({
         theme: 'striped',
@@ -88,14 +88,14 @@ function Ventas() {
   
       // 1 - x 200  /////  2- y
       doc.addImage(maipo, 'PNG', 2, 3,58,0, undefined, false);
-      doc.setFontSize(20);
-      doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
-      doc.setFontSize(45);
-      doc.text(`Compras hechas por mes`,45, 65)
-      doc.setFontSize(20);
-      doc.text(`Hecho por: Administrador`,6, 21)
-      doc.setFontSize(20);
-      doc.text(`http://www.maipogrande.ml/`,1, 220)
+        doc.setFontSize(20);
+        doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
+        doc.setFontSize(45);
+        doc.text(`Compra hechas por mes`,20, 65)
+        doc.setFontSize(20);
+        doc.text(`Hecho por: Administrador`,6, 21)
+        doc.setFontSize(20);
+        doc.text(`http://www.maipogrande.ml/`,9, 220)
       doc.rect(10, 50, 190, 20); 
       
     
@@ -126,15 +126,15 @@ function Ventas() {
   
       // 1 - x 200  /////  2- y
       doc.addImage(maipo, 'PNG', 2, 3,58,0, undefined, false);
-      doc.setFontSize(20);
-      doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
-      doc.setFontSize(45);
-      doc.text(`Estado de la compras`,45, 65)
-      doc.setFontSize(20);
-      doc.text(`Hecho por: Administrador`,6, 21)
-      doc.setFontSize(20);
-      doc.text(`http://www.maipogrande.ml/`,1, 220)
-      doc.rect(12, 50, 170, 20); 
+          doc.setFontSize(20);
+          doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
+          doc.setFontSize(45);
+          doc.text(`Estado de compras`,35, 65)
+          doc.setFontSize(20);
+          doc.text(`Hecho por: Administrador`,6, 21)
+          doc.setFontSize(20);
+          doc.text(`http://www.maipogrande.ml/`,9, 220)
+          doc.rect(12, 50, 185, 20); ; 
     
       doc.autoTable({
         theme: 'striped',
@@ -168,18 +168,18 @@ function Ventas() {
       doc.setFontSize(20);
       doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
       doc.setFontSize(45);
-      doc.text(`Productos disponibles`,45, 65)
+      doc.text(`Productos disponibles`,30, 65)
       doc.setFontSize(20);
       doc.text(`Hecho por: Administrador`,6, 21)
       doc.setFontSize(20);
-      doc.text(`http://www.maipogrande.ml/`,1, 220)
-      doc.rect(12, 50, 170, 20); 
+      doc.text(`http://www.maipogrande.ml/`,9, 220)
+      doc.rect(12, 50, 185, 20); 
     
    
       doc.autoTable({
         theme: 'striped',
            columnStyles: { 0: { halign: 'left',valign: 'middle', } }, 
-           margin: { top: 50  },
+           margin: { top: 80  },
            head: columnstock,
            body: datosStocktable
           } );
@@ -208,8 +208,9 @@ function Ventas() {
         doc.setFontSize(20);
         doc.text(`Hecho por: Administrador`,6, 21)
         doc.setFontSize(20);
-        doc.text(`http://www.maipogrande.ml/`,1, 220)
-        doc.rect(12, 50, 170, 20); 
+        doc.text(`http://www.maipogrande.ml/`,9, 220)
+        doc.rect(12, 50, 185, 20); 
+      
       
         doc.autoTable({
           theme: 'striped',
@@ -258,16 +259,17 @@ function Ventas() {
       // 1 - x 200  /////  2- y
 
       doc.addImage(maipo, 'PNG', 2, 3,58,0, undefined, false);
-        doc.setFontSize(20);
-        doc.text(`Fecha de creacion: ${fecha}`, 110 , 11);
-        doc.setFontSize(45);
-        doc.text(`Reporte general`,45, 65)
-        doc.setFontSize(20);
-        doc.text(`Hecho por: Administrador`,6, 21)
-        doc.setFontSize(20);
-        doc.text(`http://www.maipogrande.ml/`,1, 220)
+      doc.setFontSize(20);
+      doc.text(`Fecha de creacion: ${fecha}`, 200 , 11);
+      doc.setFontSize(45);
+      doc.text(`Reporte General`,65, 65)
+      doc.setFontSize(20);
+      doc.text(`Hecho por: Administrador`,6, 21)
+      doc.setFontSize(20);
+      doc.text(`http://www.maipogrande.ml/`,15, 220)
+      doc.rect(50, 50, 185, 20); 
      
-      doc.rect(50, 50, 170, 20);
+     
    
       doc.autoTable({
         theme: 'striped',
