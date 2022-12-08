@@ -61,22 +61,18 @@ const onChange = ({ target }) => {
   });
 };
       /// AGREGAR PRODUCTOR
-const  handleAgregar = async(e) =>{
-  e.preventDefault();
-  if ([correo, nombre, password].includes("")) {
-    setAlerta('Todos los campos son obligatorios')
-    setTimeout(() => {
-      setAlerta('');
-    }, 3000);
-    return;
-  }
+const  handleAgregar = async(datos, reset,setCargando) =>{
+
   try {
-    const resp = await agregarProductor(formValues);
+    setCargando(true)
+    const resp = await agregarProductor(datos);
     setAlerta({error: false, msg: resp.msg});
-    setFormValues({ nombre: '', correo: '', id:  '' ,password: ''});
+    setCargando(false);
+    reset();
   } catch (error) {
     console.log(error)
     setAlerta({error: true, msg:error.response.data.msg })
+    setCargando(false);
   }
 
   cargarProductores();

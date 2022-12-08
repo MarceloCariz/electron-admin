@@ -65,22 +65,18 @@ const onChange = ({ target }) => {
 };
 
 /// AGREGAR TRANSPORTISTA
-const  handleAgregar = async(e) =>{
-  e.preventDefault();
-  if ([correo, nombre, password].includes("")) {
-    setAlerta('Todos los campos son obligatorios')
-    setTimeout(() => {
-      setAlerta('');
-    }, 3000);
-    return;
-  }
+    
+const  handleAgregar = async(datos, reset,setCargando) =>{
   try {
-    const resp = await agregarTransportistas(formValues);
+    setCargando(true);
+    const resp = await agregarTransportistas(datos);
     setAlerta({error: false, msg: resp.msg});
-    setFormValues({ nombre: '', correo: '', id:  '' ,password: ''});
+    setCargando(false);
+    reset();
   } catch (error) {
     console.log(error)
-    setAlerta({error: true, msg:error.response.data.msg })
+    setAlerta({error: true, msg:error.response.data.msg });
+    setCargando(false);
   }
   cargartransportistas();
   setTimeout(() => {
@@ -140,7 +136,7 @@ const columns =[
           <FontAwesomeIcon icon={faUserPlus}/>
           Agregar Transportista
         </Boton>
-        <ModalAgregar error={alerta}  open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
+        <ModalAgregar error={alerta}  open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} />
         {/* -------------------FORM------------------------ */}
         <DataGrid
             style={{  width: '70vw', backgroundColor: 'white' }}

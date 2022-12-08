@@ -10,6 +10,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import ModalAgregar from '../components/ui/ModalAgregar';
 import ModalEditar from '../components/ui/ModalEditar';
 import useConsultas from '../hooks/useConsultas'; 
+import { validateRUT } from '../utils/validadorRut';
 
 
 const Clientes = () => {
@@ -60,37 +61,39 @@ const Clientes = () => {
     });
   }
 
-  const handleChangeTipoCliente = ({target}) =>{
-    // console.log(target.value)
-    if(target.value === "externo") return setFormValues({...formValues, tipo: target.value, rut: ""})
-    setFormValues({...formValues, tipo: target.value});
+  // const handleChangeTipoCliente = ({target}) =>{
+  //   // console.log(target.value)
+  //   if(target.value === "externo") return setFormValues({...formValues, tipo: target.value, rut: ""})
+  //   setFormValues({...formValues, tipo: target.value});
   
+  // }
+
+  const handleValidarRut = (rut) =>{
+    // setFormValues({...formValues, rut: target.value})
+    const valido = validateRUT(rut);
+    // !valido ? setAlertaRut({valido: false, msg: 'El rut ingresado no es valido'}) : setAlertaRut({valido: true, msg: ''});
+    return  valido;
   }
 
-  const  handleAgregar = async(e) =>{
-    e.preventDefault();
+  const  handleAgregar = async(datos, reset, setCargando) =>{
 
-    if(tipo === "local" && rut === ""){
-      setAlerta('El rut es obligatorio para el cliente local')
-      setTimeout(() => {
-        setAlerta('');
-      }, 3000);
-      return;
-    }
-    if ([correo, nombre, password,  tipo ].includes('')) {
-      setAlerta('Todos los campos son obligatorios')
-      setTimeout(() => {
-        setAlerta('');
-      }, 3000);
-      return;
+    if(datos.tipo === "local"){
+      // console.log(![datos.rut].includes("-"), datos.rut.split(''))
+      if(!datos.rut.split('').includes("-")) return setAlerta({error: true, msg:"El rut debe contener un guion (-)"})
+      const isValidRut = handleValidarRut(datos.rut);
+      if(!isValidRut && datos.tipo === "local") return setAlerta({error: true, msg:"rut no valido"});
     }
     try {
-      const resp = await agregarClientes(formValues);
+      setCargando(true);
+      const resp = await agregarClientes(datos);
       setAlerta({error: false, msg: resp.msg});
-      setFormValues({ nombre: '', correo: '', id:  '' ,password: '',  tipo: 'local',rut:''});
+      setCargando(false);
+      reset();
+      // setFormValues({ nombre: '', correo: '', id:  '' ,password: '',  tipo: 'local',rut:''});
     } catch (error) {
       console.log(error)
       setAlerta({error: true, msg:error.response.data.msg })
+      setCargando(false);
     }
     cargarClientes();
     setTimeout(() => {
@@ -153,9 +156,7 @@ const RemoveCliente = async(e)=>{
           <FontAwesomeIcon icon={faUserPlus}/>
           Agregar Cliente
         </Boton>
-        <ModalAgregar handleChangeTipoCliente={handleChangeTipoCliente} usuario="cliente" tipoCliente={tipo} rut={formValues.rut}
-        error={alerta}  open={openAgregar} handleClose={handleCloseAgregar} 
-        handleAgregar={ handleAgregar} onChange={onChange} nombre={nombre} correo={correo} password={password}/>
+        <ModalAgregar  usuario="cliente" error={alerta}  open={openAgregar} handleClose={handleCloseAgregar} handleAgregar={ handleAgregar} />
         {/* -------------------FORM------------------------ */}
         <DataGrid
             style={{  width: '70vw' , backgroundColor: 'white'}}
